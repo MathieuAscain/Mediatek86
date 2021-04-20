@@ -7,14 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mediatek86.Control;
 
-namespace Mediatek86
+namespace Mediatek86.View
 {
-    public partial class Form1 : Form
+    public partial class FrmAuthentification : Form
     {
-        public Form1()
+ 
+
+        private readonly ControlMyApp controlMyApp;
+
+        public FrmAuthentification(ControlMyApp controlMyApp)
         {
             InitializeComponent();
+            this.controlMyApp = controlMyApp;
         }
     }
 }
