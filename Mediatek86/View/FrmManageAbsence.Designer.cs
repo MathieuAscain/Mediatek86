@@ -31,25 +31,25 @@ namespace Mediatek86.View
         {
             this.lblTitleAbsence = new System.Windows.Forms.Label();
             this.grpBoxAbsence = new System.Windows.Forms.GroupBox();
-            this.dataGridViewAbsence = new System.Windows.Forms.DataGridView();
-            this.btnAddAbsence = new System.Windows.Forms.Button();
-            this.btnRemoveAbsence = new System.Windows.Forms.Button();
-            this.btnModifyAbsence = new System.Windows.Forms.Button();
-            this.panelAbsence = new System.Windows.Forms.Panel();
             this.lblPersonConcerned = new System.Windows.Forms.Label();
+            this.panelAbsence = new System.Windows.Forms.Panel();
+            this.BtnAddAbsence = new System.Windows.Forms.Button();
+            this.BtnRemoveAbsence = new System.Windows.Forms.Button();
+            this.BtnModifyAbsence = new System.Windows.Forms.Button();
+            this.dataGridViewAbsence = new System.Windows.Forms.DataGridView();
             this.grpBoxAbsenceData = new System.Windows.Forms.GroupBox();
-            this.lblReason = new System.Windows.Forms.Label();
-            this.lblLastDay = new System.Windows.Forms.Label();
-            this.lblFirstDay = new System.Windows.Forms.Label();
-            this.dateTimePickerStart = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerEnd = new System.Windows.Forms.DateTimePicker();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.panelAbsenceData = new System.Windows.Forms.Panel();
             this.btnCancelAbsence = new System.Windows.Forms.Button();
             this.btnSaveAbsence = new System.Windows.Forms.Button();
-            this.panelAbsenceData = new System.Windows.Forms.Panel();
+            this.comboBoxReason = new System.Windows.Forms.ComboBox();
+            this.dateTimePickerEnd = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerStart = new System.Windows.Forms.DateTimePicker();
+            this.lblReason = new System.Windows.Forms.Label();
+            this.lblFirstDay = new System.Windows.Forms.Label();
+            this.lblLastDay = new System.Windows.Forms.Label();
             this.grpBoxAbsence.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAbsence)).BeginInit();
             this.panelAbsence.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAbsence)).BeginInit();
             this.grpBoxAbsenceData.SuspendLayout();
             this.panelAbsenceData.SuspendLayout();
             this.SuspendLayout();
@@ -76,59 +76,6 @@ namespace Mediatek86.View
             this.grpBoxAbsence.TabStop = false;
             this.grpBoxAbsence.Text = "Absence management";
             // 
-            // dataGridViewAbsence
-            // 
-            this.dataGridViewAbsence.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewAbsence.Location = new System.Drawing.Point(22, 79);
-            this.dataGridViewAbsence.Name = "dataGridViewAbsence";
-            this.dataGridViewAbsence.RowHeadersWidth = 51;
-            this.dataGridViewAbsence.RowTemplate.Height = 24;
-            this.dataGridViewAbsence.Size = new System.Drawing.Size(401, 286);
-            this.dataGridViewAbsence.TabIndex = 0;
-            // 
-            // btnAddAbsence
-            // 
-            this.btnAddAbsence.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.btnAddAbsence.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddAbsence.Location = new System.Drawing.Point(27, 14);
-            this.btnAddAbsence.Name = "btnAddAbsence";
-            this.btnAddAbsence.Size = new System.Drawing.Size(109, 42);
-            this.btnAddAbsence.TabIndex = 1;
-            this.btnAddAbsence.Text = "Add";
-            this.btnAddAbsence.UseVisualStyleBackColor = false;
-            // 
-            // btnRemoveAbsence
-            // 
-            this.btnRemoveAbsence.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.btnRemoveAbsence.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemoveAbsence.Location = new System.Drawing.Point(257, 14);
-            this.btnRemoveAbsence.Name = "btnRemoveAbsence";
-            this.btnRemoveAbsence.Size = new System.Drawing.Size(109, 42);
-            this.btnRemoveAbsence.TabIndex = 2;
-            this.btnRemoveAbsence.Text = "Remove";
-            this.btnRemoveAbsence.UseVisualStyleBackColor = false;
-            // 
-            // btnModifyAbsence
-            // 
-            this.btnModifyAbsence.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.btnModifyAbsence.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModifyAbsence.Location = new System.Drawing.Point(142, 14);
-            this.btnModifyAbsence.Name = "btnModifyAbsence";
-            this.btnModifyAbsence.Size = new System.Drawing.Size(109, 42);
-            this.btnModifyAbsence.TabIndex = 3;
-            this.btnModifyAbsence.Text = "Modify";
-            this.btnModifyAbsence.UseVisualStyleBackColor = false;
-            // 
-            // panelAbsence
-            // 
-            this.panelAbsence.Controls.Add(this.btnAddAbsence);
-            this.panelAbsence.Controls.Add(this.btnRemoveAbsence);
-            this.panelAbsence.Controls.Add(this.btnModifyAbsence);
-            this.panelAbsence.Location = new System.Drawing.Point(22, 380);
-            this.panelAbsence.Name = "panelAbsence";
-            this.panelAbsence.Size = new System.Drawing.Size(375, 65);
-            this.panelAbsence.TabIndex = 6;
-            // 
             // lblPersonConcerned
             // 
             this.lblPersonConcerned.AutoSize = true;
@@ -139,10 +86,63 @@ namespace Mediatek86.View
             this.lblPersonConcerned.TabIndex = 7;
             this.lblPersonConcerned.Text = "Personne concernée";
             // 
+            // panelAbsence
+            // 
+            this.panelAbsence.Controls.Add(this.BtnAddAbsence);
+            this.panelAbsence.Controls.Add(this.BtnRemoveAbsence);
+            this.panelAbsence.Controls.Add(this.BtnModifyAbsence);
+            this.panelAbsence.Location = new System.Drawing.Point(22, 380);
+            this.panelAbsence.Name = "panelAbsence";
+            this.panelAbsence.Size = new System.Drawing.Size(375, 65);
+            this.panelAbsence.TabIndex = 6;
+            // 
+            // BtnAddAbsence
+            // 
+            this.BtnAddAbsence.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BtnAddAbsence.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAddAbsence.Location = new System.Drawing.Point(27, 14);
+            this.BtnAddAbsence.Name = "BtnAddAbsence";
+            this.BtnAddAbsence.Size = new System.Drawing.Size(109, 42);
+            this.BtnAddAbsence.TabIndex = 1;
+            this.BtnAddAbsence.Text = "Add";
+            this.BtnAddAbsence.UseVisualStyleBackColor = false;
+            // 
+            // BtnRemoveAbsence
+            // 
+            this.BtnRemoveAbsence.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BtnRemoveAbsence.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnRemoveAbsence.Location = new System.Drawing.Point(257, 14);
+            this.BtnRemoveAbsence.Name = "BtnRemoveAbsence";
+            this.BtnRemoveAbsence.Size = new System.Drawing.Size(109, 42);
+            this.BtnRemoveAbsence.TabIndex = 2;
+            this.BtnRemoveAbsence.Text = "Remove";
+            this.BtnRemoveAbsence.UseVisualStyleBackColor = false;
+            // 
+            // BtnModifyAbsence
+            // 
+            this.BtnModifyAbsence.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BtnModifyAbsence.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnModifyAbsence.Location = new System.Drawing.Point(142, 14);
+            this.BtnModifyAbsence.Name = "BtnModifyAbsence";
+            this.BtnModifyAbsence.Size = new System.Drawing.Size(109, 42);
+            this.BtnModifyAbsence.TabIndex = 3;
+            this.BtnModifyAbsence.Text = "Modify";
+            this.BtnModifyAbsence.UseVisualStyleBackColor = false;
+            // 
+            // dataGridViewAbsence
+            // 
+            this.dataGridViewAbsence.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewAbsence.Location = new System.Drawing.Point(22, 79);
+            this.dataGridViewAbsence.Name = "dataGridViewAbsence";
+            this.dataGridViewAbsence.RowHeadersWidth = 51;
+            this.dataGridViewAbsence.RowTemplate.Height = 24;
+            this.dataGridViewAbsence.Size = new System.Drawing.Size(401, 286);
+            this.dataGridViewAbsence.TabIndex = 0;
+            // 
             // grpBoxAbsenceData
             // 
             this.grpBoxAbsenceData.Controls.Add(this.panelAbsenceData);
-            this.grpBoxAbsenceData.Controls.Add(this.comboBox1);
+            this.grpBoxAbsenceData.Controls.Add(this.comboBoxReason);
             this.grpBoxAbsenceData.Controls.Add(this.dateTimePickerEnd);
             this.grpBoxAbsenceData.Controls.Add(this.dateTimePickerStart);
             this.grpBoxAbsenceData.Controls.Add(this.lblReason);
@@ -155,64 +155,14 @@ namespace Mediatek86.View
             this.grpBoxAbsenceData.TabStop = false;
             this.grpBoxAbsenceData.Text = "Data management";
             // 
-            // lblReason
+            // panelAbsenceData
             // 
-            this.lblReason.AutoSize = true;
-            this.lblReason.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblReason.Location = new System.Drawing.Point(50, 159);
-            this.lblReason.Name = "lblReason";
-            this.lblReason.Size = new System.Drawing.Size(75, 24);
-            this.lblReason.TabIndex = 9;
-            this.lblReason.Text = "Reason";
-            this.lblReason.Click += new System.EventHandler(this.lblPhone_Click);
-            // 
-            // lblLastDay
-            // 
-            this.lblLastDay.AutoSize = true;
-            this.lblLastDay.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLastDay.Location = new System.Drawing.Point(47, 113);
-            this.lblLastDay.Name = "lblLastDay";
-            this.lblLastDay.Size = new System.Drawing.Size(78, 24);
-            this.lblLastDay.TabIndex = 8;
-            this.lblLastDay.Text = "Last day";
-            this.lblLastDay.Click += new System.EventHandler(this.lblFirstName_Click);
-            // 
-            // lblFirstDay
-            // 
-            this.lblFirstDay.AutoSize = true;
-            this.lblFirstDay.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFirstDay.Location = new System.Drawing.Point(45, 70);
-            this.lblFirstDay.Name = "lblFirstDay";
-            this.lblFirstDay.Size = new System.Drawing.Size(80, 24);
-            this.lblFirstDay.TabIndex = 7;
-            this.lblFirstDay.Text = "First day";
-            // 
-            // dateTimePickerStart
-            // 
-            this.dateTimePickerStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePickerStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerStart.Location = new System.Drawing.Point(135, 68);
-            this.dateTimePickerStart.Name = "dateTimePickerStart";
-            this.dateTimePickerStart.Size = new System.Drawing.Size(212, 24);
-            this.dateTimePickerStart.TabIndex = 10;
-            // 
-            // dateTimePickerEnd
-            // 
-            this.dateTimePickerEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePickerEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerEnd.Location = new System.Drawing.Point(135, 113);
-            this.dateTimePickerEnd.Name = "dateTimePickerEnd";
-            this.dateTimePickerEnd.Size = new System.Drawing.Size(212, 24);
-            this.dateTimePickerEnd.TabIndex = 11;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(135, 156);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(212, 30);
-            this.comboBox1.TabIndex = 12;
+            this.panelAbsenceData.Controls.Add(this.btnCancelAbsence);
+            this.panelAbsenceData.Controls.Add(this.btnSaveAbsence);
+            this.panelAbsenceData.Location = new System.Drawing.Point(54, 210);
+            this.panelAbsenceData.Name = "panelAbsenceData";
+            this.panelAbsenceData.Size = new System.Drawing.Size(269, 63);
+            this.panelAbsenceData.TabIndex = 15;
             // 
             // btnCancelAbsence
             // 
@@ -236,14 +186,62 @@ namespace Mediatek86.View
             this.btnSaveAbsence.Text = "Save";
             this.btnSaveAbsence.UseVisualStyleBackColor = false;
             // 
-            // panelAbsenceData
+            // comboBoxReason
             // 
-            this.panelAbsenceData.Controls.Add(this.btnCancelAbsence);
-            this.panelAbsenceData.Controls.Add(this.btnSaveAbsence);
-            this.panelAbsenceData.Location = new System.Drawing.Point(54, 210);
-            this.panelAbsenceData.Name = "panelAbsenceData";
-            this.panelAbsenceData.Size = new System.Drawing.Size(269, 63);
-            this.panelAbsenceData.TabIndex = 15;
+            this.comboBoxReason.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxReason.FormattingEnabled = true;
+            this.comboBoxReason.Location = new System.Drawing.Point(135, 156);
+            this.comboBoxReason.Name = "comboBoxReason";
+            this.comboBoxReason.Size = new System.Drawing.Size(212, 30);
+            this.comboBoxReason.TabIndex = 12;
+            // 
+            // dateTimePickerEnd
+            // 
+            this.dateTimePickerEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePickerEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerEnd.Location = new System.Drawing.Point(135, 113);
+            this.dateTimePickerEnd.Name = "dateTimePickerEnd";
+            this.dateTimePickerEnd.Size = new System.Drawing.Size(212, 24);
+            this.dateTimePickerEnd.TabIndex = 11;
+            // 
+            // dateTimePickerStart
+            // 
+            this.dateTimePickerStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePickerStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerStart.Location = new System.Drawing.Point(135, 68);
+            this.dateTimePickerStart.Name = "dateTimePickerStart";
+            this.dateTimePickerStart.Size = new System.Drawing.Size(212, 24);
+            this.dateTimePickerStart.TabIndex = 10;
+            // 
+            // lblReason
+            // 
+            this.lblReason.AutoSize = true;
+            this.lblReason.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblReason.Location = new System.Drawing.Point(50, 159);
+            this.lblReason.Name = "lblReason";
+            this.lblReason.Size = new System.Drawing.Size(75, 24);
+            this.lblReason.TabIndex = 9;
+            this.lblReason.Text = "Reason";
+            // 
+            // lblFirstDay
+            // 
+            this.lblFirstDay.AutoSize = true;
+            this.lblFirstDay.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFirstDay.Location = new System.Drawing.Point(45, 70);
+            this.lblFirstDay.Name = "lblFirstDay";
+            this.lblFirstDay.Size = new System.Drawing.Size(80, 24);
+            this.lblFirstDay.TabIndex = 7;
+            this.lblFirstDay.Text = "First day";
+            // 
+            // lblLastDay
+            // 
+            this.lblLastDay.AutoSize = true;
+            this.lblLastDay.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLastDay.Location = new System.Drawing.Point(47, 113);
+            this.lblLastDay.Name = "lblLastDay";
+            this.lblLastDay.Size = new System.Drawing.Size(78, 24);
+            this.lblLastDay.TabIndex = 8;
+            this.lblLastDay.Text = "Last day";
             // 
             // FrmManageAbsence
             // 
@@ -257,8 +255,8 @@ namespace Mediatek86.View
             this.Text = "Absences";
             this.grpBoxAbsence.ResumeLayout(false);
             this.grpBoxAbsence.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAbsence)).EndInit();
             this.panelAbsence.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAbsence)).EndInit();
             this.grpBoxAbsenceData.ResumeLayout(false);
             this.grpBoxAbsenceData.PerformLayout();
             this.panelAbsenceData.ResumeLayout(false);
@@ -274,14 +272,14 @@ namespace Mediatek86.View
         private System.Windows.Forms.DataGridView dataGridViewAbsence;
         private System.Windows.Forms.Label lblPersonConcerned;
         private System.Windows.Forms.Panel panelAbsence;
-        private System.Windows.Forms.Button btnAddAbsence;
-        private System.Windows.Forms.Button btnRemoveAbsence;
-        private System.Windows.Forms.Button btnModifyAbsence;
+        private System.Windows.Forms.Button BtnAddAbsence;
+        private System.Windows.Forms.Button BtnRemoveAbsence;
+        private System.Windows.Forms.Button BtnModifyAbsence;
         private System.Windows.Forms.GroupBox grpBoxAbsenceData;
         private System.Windows.Forms.Label lblReason;
         private System.Windows.Forms.Label lblFirstDay;
         private System.Windows.Forms.Label lblLastDay;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxReason;
         private System.Windows.Forms.DateTimePicker dateTimePickerEnd;
         private System.Windows.Forms.DateTimePicker dateTimePickerStart;
         private System.Windows.Forms.Panel panelAbsenceData;

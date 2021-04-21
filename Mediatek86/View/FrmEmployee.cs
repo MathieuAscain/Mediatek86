@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Mediatek86.Control;
 
 namespace Mediatek86.View
 {
+    /// <summary>
+    /// Form for the 
+    /// </summary>
     public partial class FrmEmployee : Form
     {
-        private readonly ControlMyApp controlMyApp;
+        private ControlMyApp controlMyApp;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="controlMyApp"></param>
         public FrmEmployee(ControlMyApp controlMyApp)
         {
             InitializeComponent();
