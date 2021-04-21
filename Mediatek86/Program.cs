@@ -8,6 +8,9 @@ using Mediatek86.Control;
 
 namespace Mediatek86
 {
+    /// <summary>
+    /// Main entry for the app
+    /// </summary>
     static class Program
     {
         /// <summary>
