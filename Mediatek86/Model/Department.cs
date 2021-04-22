@@ -3,14 +3,16 @@ namespace Mediatek86.Model
 {
     /// <summary>
     /// To get access and modify the requested data stored in the table Department
-    /// The class is defined as abstract because no additional data shall be created
     /// </summary>
-    abstract class Department
+    public class Department
     {
+
+        private int _idDepartment;
+
         /// <summary>
         /// Only a getter as this field is the primary key from the table department
         /// </summary>
-        public int IdDepartment { get; }
+        public int IdDepartment { get => _idDepartment; set => _idDepartment = value; }
 
         /// <summary>
         /// Only a getter as this table is not supposed to be modified
@@ -26,6 +28,15 @@ namespace Mediatek86.Model
         {
             IdDepartment = idDepartment;
             DepartmentName = departmentName;
+        }
+
+        /// <summary>
+        /// Définit l'information à afficher (juste le nom)
+        /// </summary>
+        /// <returns>nom du profil</returns>
+        public override string ToString()
+        {
+            return DepartmentName;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Mediatek86.dal;
+using Mediatek86.Model;
 using Mediatek86.View;
 
 namespace Mediatek86.Control
@@ -40,5 +42,43 @@ namespace Mediatek86.Control
                 return false;
             }
         }
+
+        /// <summary>
+        /// Get and return the data from the employee coming from the database
+        /// </summary>
+        /// <returns>list of employees</returns>
+        public List<Employee> GetTheEmployees()
+        {
+            return AccessDataBase.GetTheEmployees();
+        }
+
+        /// <summary>
+        /// Get and return the list of departments stored in the database
+        /// </summary>
+        /// <returns>list of department</returns>
+        public List<Department> GetTheDepartments()
+        {
+            return AccessDataBase.GetTheDepartments();
+        }
+
+        /// <summary>
+        ///  Request to remove an employee
+        /// </summary>
+        /// <param name="employee">employee to be removed from the list</param>
+        public void RemoveEmployee(Employee employee)
+        {
+            AccessDataBase.RemoveEmployee(employee);
+        }
+
+        public void UpdateEmployee(Employee employee)
+        {
+            AccessDataBase.UpdateEmployee(employee);
+        }
+
+        public void AddModifiedEmployee(Employee employee)
+        {
+            AccessDataBase.AddModifiedEmployee(employee);
+        }
+
     }
 }

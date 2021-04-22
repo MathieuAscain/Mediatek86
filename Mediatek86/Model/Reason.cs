@@ -3,9 +3,8 @@ namespace Mediatek86.Model
 {
     /// <summary>
     /// To get access to the data stored in the table Absence
-    /// The class is defined as abstract because no additional data shall be created
     /// </summary>
-    abstract class Reason
+    public class Reason
     {
         /// <summary>
         /// Only a getter as this table is not supposed to be modified

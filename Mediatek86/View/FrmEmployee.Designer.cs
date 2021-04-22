@@ -90,6 +90,7 @@ namespace Mediatek86.View
             this.BtnAddEmployee.TabIndex = 1;
             this.BtnAddEmployee.Text = "Add";
             this.BtnAddEmployee.UseVisualStyleBackColor = false;
+            this.BtnAddEmployee.Click += new System.EventHandler(this.BtnAddEmployee_Click);
             // 
             // BtnRemoveEmployee
             // 
@@ -101,6 +102,7 @@ namespace Mediatek86.View
             this.BtnRemoveEmployee.TabIndex = 2;
             this.BtnRemoveEmployee.Text = "Remove";
             this.BtnRemoveEmployee.UseVisualStyleBackColor = false;
+            this.BtnRemoveEmployee.Click += new System.EventHandler(this.BtnRemoveEmployee_Click);
             // 
             // BtnModifyEmployee
             // 
@@ -112,6 +114,7 @@ namespace Mediatek86.View
             this.BtnModifyEmployee.TabIndex = 3;
             this.BtnModifyEmployee.Text = "Modify";
             this.BtnModifyEmployee.UseVisualStyleBackColor = false;
+            this.BtnModifyEmployee.Click += new System.EventHandler(this.BtnModifyEmployee_Click);
             // 
             // dataGridViewEmployee
             // 
@@ -120,6 +123,7 @@ namespace Mediatek86.View
             this.dataGridViewEmployee.Name = "dataGridViewEmployee";
             this.dataGridViewEmployee.RowHeadersWidth = 51;
             this.dataGridViewEmployee.RowTemplate.Height = 24;
+            this.dataGridViewEmployee.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewEmployee.Size = new System.Drawing.Size(426, 320);
             this.dataGridViewEmployee.TabIndex = 0;
             // 
@@ -195,6 +199,7 @@ namespace Mediatek86.View
             this.BtnCancelEmployee.TabIndex = 5;
             this.BtnCancelEmployee.Text = "Cancel";
             this.BtnCancelEmployee.UseVisualStyleBackColor = false;
+            this.BtnCancelEmployee.Click += new System.EventHandler(this.BtnCancelEmployee_Click);
             // 
             // BtnSaveEmployee
             // 
@@ -206,6 +211,7 @@ namespace Mediatek86.View
             this.BtnSaveEmployee.TabIndex = 5;
             this.BtnSaveEmployee.Text = "Save";
             this.BtnSaveEmployee.UseVisualStyleBackColor = false;
+            this.BtnSaveEmployee.Click += new System.EventHandler(this.BtnSaveEmployee_Click);
             // 
             // comboBoxDepartment
             // 
