@@ -6,11 +6,11 @@ namespace Mediatek86.Model
     /// </summary>
     public class Employee
     {
-        private int _idDepartment;
         private string _familyName;
         private string _firstName;
         private string _phone;
         private string _mail;
+        private int _idDepartment;
 
         /// <summary>
         /// Only a getter as this field is the primary key from the table employee
@@ -43,6 +43,9 @@ namespace Mediatek86.Model
         /// </summary>
         public string Mail { get => _mail; set => _mail = value; }
 
+        public string DepartmentName { get; }
+
+
         /// <summary>
         /// Constructor of the table employee
         /// </summary>
@@ -52,19 +55,21 @@ namespace Mediatek86.Model
         /// <param name="firstName">firstName is a field of the table employee. Its represents the employee first name</param>
         /// <param name="phone">phone is a field of the table employee. Its represents the employee phone</param>
         /// <param name="mail">mail is a field of the table employee. Its represents the employee mail</param>
-        public Employee(int idEmployee, 
-                        int idDepartment, 
-                        string familyName, 
-                        string firstName, 
-                        string phone, 
-                        string mail)
+        public Employee(int idEmployee,
+                        string familyName,
+                        string firstName,
+                        string phone,
+                        string mail,
+                        int idDepartment,
+                        string departmentName)
         {
             IdEmployee = idEmployee;
-            _idDepartment = idDepartment;
             _familyName = familyName;
             _firstName = firstName;
             _phone = phone;
             _mail = mail;
+            _idDepartment = idDepartment;
+            DepartmentName = departmentName;
         }
     }
 }

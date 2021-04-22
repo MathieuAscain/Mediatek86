@@ -46,10 +46,6 @@ namespace Mediatek86.View
                     MessageBox.Show("Wrong authentification or you are not admin", "Alert");
 
                 }
-                else
-                {
-
-                }
             }
         }
     }
