@@ -11,7 +11,7 @@ Its goal is to manage each multimedia library employee by assigning them to a de
 *As a **Data Management System** (**SGBDR** in French), I have decided using **MySQL**.*<br/>
 *As an **Integrated Development Environment** (**IDE** in French), I have opted for **Visual Studio** and **C#** programming language.*
 
-*Login for the connexion : responsable*
+*Login for the connexion : responsable*<br>
 *Password for the connexion : mathieu*
 
 
