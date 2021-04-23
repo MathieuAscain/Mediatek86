@@ -84,16 +84,36 @@ namespace Mediatek86.dal
             return theDepartments;
         }
 
-        public static void RemoveEmployee(Employee employee)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employee"></param>
+        public static void RemoveEmployeeFromAbsence(Employee employee)
         {
-            string req = "delete from personnel where idpersonnel = @idpersonnel;";
+            string req = "delete from absence where idpersonnel = @idpersonnelAbsence ";
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
-                {"@idpersonnel", employee.IdEmployee}
+                {"@idpersonnelAbsence", employee.IdEmployee}
             };
             ConnexionDataBase connexion = ConnexionDataBase.GetInstance(connexionString);
             connexion.ReqUpdate(req, parameters);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employee"></param>
+        public static void RemoveEmployeeFromEmployee(Employee employee)
+        {
+            string req = "delete from personnel where idpersonnel = @idpersonnelPersonnel;";
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                {"@idpersonnelPersonnel", employee.IdEmployee}
+            };
+            ConnexionDataBase connexion = ConnexionDataBase.GetInstance(connexionString);
+            connexion.ReqUpdate(req, parameters);
+        }
+
 
         public static void UpdateEmployee(Employee employee)
         {
@@ -102,11 +122,11 @@ namespace Mediatek86.dal
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
                 {"@idpersonnel", employee.IdEmployee },
+                {"@idservice", employee.IdDepartment },
                 {"@nom", employee.FamilyName },
                 {"@prenom", employee.FirstName },
                 {"@tel", employee.Phone },
-                {"@mail", employee.Mail },
-                {"@idservice", employee.IdDepartment }
+                {"@mail", employee.Mail }
             };
             ConnexionDataBase connexion = ConnexionDataBase.GetInstance(connexionString);
             connexion.ReqUpdate(req, parameters);
@@ -114,8 +134,8 @@ namespace Mediatek86.dal
 
        public static void AddModifiedEmployee(Employee employee)
         {
-            string req = "insert into personnel(nom, prenom, tel, mail, pwd, idprofil) ";
-            req += "values (@nom, @prenom, @tel, @mail, @pwd, @idprofil);";
+            string req = "insert into personnel(nom, prenom, tel, mail, idservice) ";
+            req += "values (@nom, @prenom, @tel, @mail, @idservice);";
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
                 {"@nom", employee.FamilyName },

@@ -95,7 +95,7 @@ namespace Mediatek86.View
             {
                 modificationOngoing = true;
                 grpBoxEmployee.Enabled = false;
-                lblShowButtonClicked.Text = "Modify Employee data";
+                lblShowButtonClicked.Text = "Modifying";
                 Employee selectedEmployee = dataGridViewEmployee.SelectedRows[0].DataBoundItem as Employee;
                 textBoxFamilyName.Text = selectedEmployee.FamilyName;
                 textBoxFirstName.Text = selectedEmployee.FirstName;
@@ -121,7 +121,7 @@ namespace Mediatek86.View
                 EmptyEmployeeSelection();
                 grpBoxEmployee.Enabled = true;
                 modificationOngoing = false;
-                lblShowButtonClicked.Text = "Add an employee";
+                lblShowButtonClicked.Text = "Adding";
             }
         }
 
@@ -161,10 +161,10 @@ namespace Mediatek86.View
             if (dataGridViewEmployee.SelectedRows.Count > 0)
             {
                 Employee employee = dataGridViewEmployee.SelectedRows[0].DataBoundItem as Employee;
-                //Employee employee = (Employee)bindingSourceEmployees.List[bindingSourceEmployees.Position];
                 if (MessageBox.Show("Do you really want to delete the line " + employee.FamilyName + " " + employee.FirstName + " ?", "Confirmation before removing the line", MessageBoxButtons.YesNo) == DialogResult.Yes) { }
                 {
-                    controlMyApp.RemoveEmployee(employee);
+                    controlMyApp.RemoveEmployeeFromAbsence(employee);
+                    controlMyApp.RemoveEmployeeFromEmployee(employee);
                     FillEmployeesList();
                 }
             }
@@ -186,10 +186,7 @@ namespace Mediatek86.View
             else
             
             {
-
-                //Department department = dataGridViewDepartment.SelectedRows[0].DataBoundItem as Department;
-
-                //Department department = (Department)bindingSourceEmployees.List[bindingSourceDepartments.Position];
+                Department department = (Department)bindingSourceDepartments.List[bindingSourceDepartments.Position];
                 int idEmployee = 0;
                 if (modificationOngoing)
                 {
@@ -208,7 +205,7 @@ namespace Mediatek86.View
                     controlMyApp.UpdateEmployee(employee);
                     modificationOngoing = false;
                     grpBoxEmployee.Enabled = true;
-                    lblShowButtonClicked.Text = "Add an employee";
+                    lblShowButtonClicked.Text = "Adding";
                 }
                 else
                 {

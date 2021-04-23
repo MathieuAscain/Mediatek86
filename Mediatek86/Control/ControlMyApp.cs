@@ -65,16 +65,33 @@ namespace Mediatek86.Control
         ///  Request to remove an employee
         /// </summary>
         /// <param name="employee">employee to be removed from the list</param>
-        public void RemoveEmployee(Employee employee)
+        public void RemoveEmployeeFromAbsence(Employee employee)
         {
-            AccessDataBase.RemoveEmployee(employee);
+            AccessDataBase.RemoveEmployeeFromAbsence(employee);
+        }
+      
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employee"></param>
+        public void RemoveEmployeeFromEmployee(Employee employee)
+        {
+            AccessDataBase.RemoveEmployeeFromEmployee(employee);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employee"></param>
         public void UpdateEmployee(Employee employee)
         {
             AccessDataBase.UpdateEmployee(employee);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employee"></param>
         public void AddModifiedEmployee(Employee employee)
         {
             AccessDataBase.AddModifiedEmployee(employee);
