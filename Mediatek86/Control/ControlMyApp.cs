@@ -97,5 +97,24 @@ namespace Mediatek86.Control
             AccessDataBase.AddModifiedEmployee(employee);
         }
 
+        public void OpenAbsence(Employee employee)
+        {
+            new FrmManageAbsence(this, employee).ShowDialog();
+        }
+
+        
+        public List<Absence> GetTheAbsences(Employee employee)
+        {
+           return AccessDataBase.GetTheAbsences(employee);
+        }
+
+        
+        public List<Reason> GetTheReasons()
+        {
+            return AccessDataBase.GetTheReasons();
+        }
+        
+
+
     }
 }

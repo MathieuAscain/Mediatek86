@@ -26,5 +26,10 @@ namespace Mediatek86.Model
             IdReason = idReason;
             Justification = justification;
         }
+
+        public override string ToString()
+        {
+            return Justification;
+        }
     }
 }

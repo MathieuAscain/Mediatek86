@@ -1,4 +1,7 @@
 ﻿
+using System.Collections.Generic;
+using Mediatek86.Control;
+
 namespace Mediatek86.Model
 {
     /// <summary>
@@ -6,11 +9,13 @@ namespace Mediatek86.Model
     /// </summary>
     public class Employee
     {
+
         private string _familyName;
         private string _firstName;
         private string _phone;
         private string _mail;
         private int _idDepartment;
+        private List<Absence> theAbsences = new List<Absence>();
 
         /// <summary>
         /// Only a getter as this field is the primary key from the table employee
@@ -70,6 +75,8 @@ namespace Mediatek86.Model
             _mail = mail;
             _idDepartment = idDepartment;
             DepartmentName = departmentName;
+           
         }
+
     }
 }

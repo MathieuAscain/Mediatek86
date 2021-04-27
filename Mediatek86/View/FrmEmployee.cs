@@ -17,6 +17,8 @@ namespace Mediatek86.View
         private bool modificationOngoing;
         readonly BindingSource bindingSourceEmployees = new BindingSource();
         readonly BindingSource bindingSourceDepartments = new BindingSource();
+        object mySender;
+
 
         /// <summary>
         /// Initialization of the graphic interface
@@ -35,6 +37,7 @@ namespace Mediatek86.View
         /// </summary>
         public void Init()
         {
+            grpBoxEmployeeData.Enabled = false;
             FillEmployeesList();
             FillDepartmentsList();
             
@@ -49,8 +52,8 @@ namespace Mediatek86.View
             bindingSourceEmployees.DataSource = theEmployees;
             dataGridViewEmployee.DataSource = bindingSourceEmployees;
             dataGridViewEmployee.RowHeadersVisible = false;
-            dataGridViewEmployee.Columns["idEmployee"].Visible = false;
-            dataGridViewEmployee.Columns["idDepartment"].Visible = false;
+            dataGridViewEmployee.Columns["IdEmployee"].Visible = false;
+            dataGridViewEmployee.Columns["IdDepartment"].Visible = false;
             dataGridViewEmployee.Columns["FamilyName"].HeaderText = "Family name";
             dataGridViewEmployee.Columns["FirstName"].HeaderText = "First name";
             dataGridViewEmployee.Columns["DepartmentName"].HeaderText = "Department";
@@ -84,6 +87,47 @@ namespace Mediatek86.View
             comboBoxDepartment.SelectedIndex = 0;
         }
 
+        private bool TextBoxesAreNullOrEmpty()
+        {
+            if(String.IsNullOrEmpty(textBoxFamilyName.Text) ||
+                String.IsNullOrEmpty(textBoxFirstName.Text) ||
+                String.IsNullOrEmpty(textBoxPhone.Text) ||
+                String.IsNullOrEmpty(textBoxMail.Text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void methodeAdd()
+        {
+            if (TextBoxesAreNullOrEmpty())
+            {
+                MessageBox.Show("All the fields shall be filled", "Information");
+            }
+            else
+            {
+                Int32 idEmployee = dataGridViewEmployee.Rows.Count - 1;
+
+                bindingSourceEmployees.Add(new Employee(idEmployee,
+                                                 textBoxFamilyName.Text,
+                                                 textBoxFirstName.Text,
+                                                 textBoxPhone.Text,
+                                                 textBoxMail.Text,
+                                                 comboBoxDepartment.SelectedIndex,
+                                                 comboBoxDepartment.Text
+                                                 ));
+
+            }
+        }
+
+
+
+    
+
         /// <summary>
         /// Modify the fields of the employee selected in the dataGridView
         /// </summary>
@@ -109,53 +153,6 @@ namespace Mediatek86.View
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnCancelEmployee_Click(object sender, System.EventArgs e)
-        {
-            if (MessageBox.Show("Do you really want to cancel ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                EmptyEmployeeSelection();
-                grpBoxEmployee.Enabled = true;
-                modificationOngoing = false;
-                lblShowButtonClicked.Text = "Adding";
-            }
-        }
-
- 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnAddEmployee_Click(object sender, System.EventArgs e)
-        {
-            if (String.IsNullOrEmpty(textBoxFamilyName.Text) || 
-                String.IsNullOrEmpty(textBoxFirstName.Text) || 
-                String.IsNullOrEmpty(textBoxPhone.Text) || 
-                String.IsNullOrEmpty(textBoxMail.Text))
-            {
-                MessageBox.Show("All the fields shall be filled", "Information");
-            }
-            else
-            {
-                Int32 idEmployee = dataGridViewEmployee.Rows.Count - 1;
-            
-                bindingSourceEmployees.Add(new Employee(idEmployee,
-                                                 textBoxFamilyName.Text,
-                                                 textBoxFirstName.Text,
-                                                 textBoxPhone.Text,
-                                                 textBoxMail.Text,
-                                                 comboBoxDepartment.SelectedIndex,
-                                                 comboBoxDepartment.Text
-                                                 ));
-            }
-        }
-
         private void BtnRemoveEmployee_Click(object sender, EventArgs e)
         {
             if (dataGridViewEmployee.SelectedRows.Count > 0)
@@ -174,46 +171,80 @@ namespace Mediatek86.View
             }
         }
 
-        private void BtnSaveEmployee_Click(object sender, EventArgs e)
+   
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCancelEmployee_Click(object sender, System.EventArgs e)
         {
-            if (String.IsNullOrEmpty(textBoxFamilyName.Text) ||
-                String.IsNullOrEmpty(textBoxFirstName.Text) ||
-                String.IsNullOrEmpty(textBoxPhone.Text) ||
-                String.IsNullOrEmpty(textBoxMail.Text))
+            if (MessageBox.Show("Do you really want to cancel ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                MessageBox.Show("All the informations shall be filled", "Information");
+                EmptyEmployeeSelection();
+                grpBoxEmployee.Enabled = true;
+                modificationOngoing = false;
+                lblShowButtonClicked.Text = "Adding";
+            }
+        }
+
+
+        private void BtnAccessAbsence_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewEmployee.SelectedRows.Count > 0)
+            {
+                Employee employee = (Employee)bindingSourceEmployees.List[bindingSourceEmployees.Position];
+                controlMyApp.OpenAbsence(employee);
             }
             else
-            
             {
-                Department department = (Department)bindingSourceDepartments.List[bindingSourceDepartments.Position];
-                int idEmployee = 0;
-                if (modificationOngoing)
-                {
-                    idEmployee = (int)dataGridViewEmployee.SelectedRows[0].Cells["idEmployee"].Value;
-                }
-                Employee employee = new Employee(idEmployee,
-                                                 textBoxFamilyName.Text,
-                                                 textBoxFirstName.Text,
-                                                 textBoxPhone.Text,
-                                                 textBoxMail.Text,
-                                                 comboBoxDepartment.SelectedIndex,
-                                                 comboBoxDepartment.Text);
+                MessageBox.Show("A line should be selected.", "Information");
+            } 
+        }
 
-                if (modificationOngoing)
-                {
-                    controlMyApp.UpdateEmployee(employee);
-                    modificationOngoing = false;
-                    grpBoxEmployee.Enabled = true;
-                    lblShowButtonClicked.Text = "Adding";
-                }
-                else
-                {
-                    controlMyApp.AddModifiedEmployee(employee);
-                }
-                FillEmployeesList();
-                EmptyEmployeeSelection();
+        private void BtnAddEmployee_Click(object sender, EventArgs e)
+        {
+            grpBoxEmployeeData.Enabled = true;
+            mySender = sender;
+            //Button clickedButton = (Button)sender;
+        }
+
+        private void BtnSaveEmployee_Click(object sender, EventArgs e)
+        {
+
+            if (TextBoxesAreNullOrEmpty())
+            {
+                MessageBox.Show("All the fields shall be filled", "Information");
             }
+            else
+            {
+                Button btn = (Button)mySender;
+
+                switch(btn.Text)
+                {
+                    case "Add":
+                        AddEmployee();
+                        break;
+                    case "Modify":
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void AddEmployee()
+        {
+            Int32 idEmployee = dataGridViewEmployee.Rows.Count - 1;
+            bindingSourceEmployees.Add(new Employee(idEmployee,
+            textBoxFamilyName.Text,
+            textBoxFirstName.Text,
+            textBoxPhone.Text,
+            textBoxMail.Text,
+            comboBoxDepartment.SelectedIndex,
+            comboBoxDepartment.Text
+            ));
         }
     }
 }

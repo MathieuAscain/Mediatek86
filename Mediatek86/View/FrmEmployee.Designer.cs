@@ -31,7 +31,7 @@ namespace Mediatek86.View
         {
             this.grpBoxEmployee = new System.Windows.Forms.GroupBox();
             this.panelEmployee = new System.Windows.Forms.Panel();
-            this.BtnAddEmployee = new System.Windows.Forms.Button();
+            this.BtnSaveEmployee = new System.Windows.Forms.Button();
             this.BtnRemoveEmployee = new System.Windows.Forms.Button();
             this.BtnModifyEmployee = new System.Windows.Forms.Button();
             this.dataGridViewEmployee = new System.Windows.Forms.DataGridView();
@@ -41,7 +41,7 @@ namespace Mediatek86.View
             this.grpBoxEmployeeData = new System.Windows.Forms.GroupBox();
             this.panelEmployeeData = new System.Windows.Forms.Panel();
             this.BtnCancelEmployee = new System.Windows.Forms.Button();
-            this.BtnSaveEmployee = new System.Windows.Forms.Button();
+            this.BtnAddEmployee = new System.Windows.Forms.Button();
             this.comboBoxDepartment = new System.Windows.Forms.ComboBox();
             this.textBoxMail = new System.Windows.Forms.TextBox();
             this.textBoxPhone = new System.Windows.Forms.TextBox();
@@ -72,25 +72,25 @@ namespace Mediatek86.View
             // 
             // panelEmployee
             // 
-            this.panelEmployee.Controls.Add(this.BtnAddEmployee);
             this.panelEmployee.Controls.Add(this.BtnRemoveEmployee);
+            this.panelEmployee.Controls.Add(this.BtnAddEmployee);
             this.panelEmployee.Controls.Add(this.BtnModifyEmployee);
             this.panelEmployee.Location = new System.Drawing.Point(18, 358);
             this.panelEmployee.Name = "panelEmployee";
             this.panelEmployee.Size = new System.Drawing.Size(426, 65);
             this.panelEmployee.TabIndex = 5;
             // 
-            // BtnAddEmployee
+            // BtnSaveEmployee
             // 
-            this.BtnAddEmployee.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.BtnAddEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAddEmployee.Location = new System.Drawing.Point(48, 14);
-            this.BtnAddEmployee.Name = "BtnAddEmployee";
-            this.BtnAddEmployee.Size = new System.Drawing.Size(109, 42);
-            this.BtnAddEmployee.TabIndex = 1;
-            this.BtnAddEmployee.Text = "Add";
-            this.BtnAddEmployee.UseVisualStyleBackColor = false;
-            this.BtnAddEmployee.Click += new System.EventHandler(this.BtnAddEmployee_Click);
+            this.BtnSaveEmployee.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BtnSaveEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSaveEmployee.Location = new System.Drawing.Point(24, 9);
+            this.BtnSaveEmployee.Name = "BtnSaveEmployee";
+            this.BtnSaveEmployee.Size = new System.Drawing.Size(109, 42);
+            this.BtnSaveEmployee.TabIndex = 1;
+            this.BtnSaveEmployee.Text = "Save";
+            this.BtnSaveEmployee.UseVisualStyleBackColor = false;
+            this.BtnSaveEmployee.Click += new System.EventHandler(this.BtnSaveEmployee_Click);
             // 
             // BtnRemoveEmployee
             // 
@@ -138,6 +138,7 @@ namespace Mediatek86.View
             this.BtnAccessAbsence.TabIndex = 1;
             this.BtnAccessAbsence.Text = "Access to absences";
             this.BtnAccessAbsence.UseVisualStyleBackColor = false;
+            this.BtnAccessAbsence.Click += new System.EventHandler(this.BtnAccessAbsence_Click);
             // 
             // lblTitleEmployee
             // 
@@ -182,8 +183,8 @@ namespace Mediatek86.View
             // 
             // panelEmployeeData
             // 
-            this.panelEmployeeData.Controls.Add(this.BtnCancelEmployee);
             this.panelEmployeeData.Controls.Add(this.BtnSaveEmployee);
+            this.panelEmployeeData.Controls.Add(this.BtnCancelEmployee);
             this.panelEmployeeData.Location = new System.Drawing.Point(146, 277);
             this.panelEmployeeData.Name = "panelEmployeeData";
             this.panelEmployeeData.Size = new System.Drawing.Size(269, 63);
@@ -201,17 +202,17 @@ namespace Mediatek86.View
             this.BtnCancelEmployee.UseVisualStyleBackColor = false;
             this.BtnCancelEmployee.Click += new System.EventHandler(this.BtnCancelEmployee_Click);
             // 
-            // BtnSaveEmployee
+            // BtnAddEmployee
             // 
-            this.BtnSaveEmployee.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.BtnSaveEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSaveEmployee.Location = new System.Drawing.Point(24, 9);
-            this.BtnSaveEmployee.Name = "BtnSaveEmployee";
-            this.BtnSaveEmployee.Size = new System.Drawing.Size(109, 42);
-            this.BtnSaveEmployee.TabIndex = 5;
-            this.BtnSaveEmployee.Text = "Save";
-            this.BtnSaveEmployee.UseVisualStyleBackColor = false;
-            this.BtnSaveEmployee.Click += new System.EventHandler(this.BtnSaveEmployee_Click);
+            this.BtnAddEmployee.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BtnAddEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAddEmployee.Location = new System.Drawing.Point(37, 14);
+            this.BtnAddEmployee.Name = "BtnAddEmployee";
+            this.BtnAddEmployee.Size = new System.Drawing.Size(109, 42);
+            this.BtnAddEmployee.TabIndex = 5;
+            this.BtnAddEmployee.Text = "Add";
+            this.BtnAddEmployee.UseVisualStyleBackColor = false;
+            this.BtnAddEmployee.Click += new System.EventHandler(this.BtnAddEmployee_Click);
             // 
             // comboBoxDepartment
             // 
@@ -332,7 +333,7 @@ namespace Mediatek86.View
         private System.Windows.Forms.DataGridView dataGridViewEmployee;
         private System.Windows.Forms.Button BtnModifyEmployee;
         private System.Windows.Forms.Button BtnRemoveEmployee;
-        private System.Windows.Forms.Button BtnAddEmployee;
+        private System.Windows.Forms.Button BtnSaveEmployee;
         private System.Windows.Forms.Button BtnAccessAbsence;
         private System.Windows.Forms.Label lblTitleEmployee;
         private System.Windows.Forms.Label lblShowButtonClicked;
@@ -347,7 +348,7 @@ namespace Mediatek86.View
         private System.Windows.Forms.Label lblFirstName;
         private System.Windows.Forms.Label lblFamilyName;
         private System.Windows.Forms.Button BtnCancelEmployee;
-        private System.Windows.Forms.Button BtnSaveEmployee;
+        private System.Windows.Forms.Button BtnAddEmployee;
         private System.Windows.Forms.ComboBox comboBoxDepartment;
         private System.Windows.Forms.Panel panelEmployee;
         private System.Windows.Forms.Panel panelEmployeeData;
