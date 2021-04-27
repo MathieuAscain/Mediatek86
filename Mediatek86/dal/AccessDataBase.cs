@@ -58,6 +58,7 @@ namespace Mediatek86.dal
             curs.ReqSelect(req, null);
             while (curs.Read())
             {
+                
                 Employee employee = new Employee((int)curs.Field("idpersonnel"), (string)curs.Field("nom"), (string)curs.Field("prenom"), (string)curs.Field("tel"), (string)curs.Field("mail"), (int)curs.Field("idservice"), (string)curs.Field("service"));
                 theEmployee.Add(employee);
             }
@@ -65,11 +66,12 @@ namespace Mediatek86.dal
             return theEmployee;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static List<Department> GetTheDepartments()
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            public static List<Department> GetTheDepartments()
         {
             List<Department> theDepartments = new List<Department>();
             string req = "select * from service order by nom;";
@@ -84,11 +86,11 @@ namespace Mediatek86.dal
             return theDepartments;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="employee"></param>
-        public static void RemoveEmployeeFromAbsence(Employee employee)
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="employee"></param>
+            public static void RemoveEmployeeFromAbsence(Employee employee)
         {
             string req = "delete from absence where idpersonnel = @idpersonnelAbsence ";
             Dictionary<string, object> parameters = new Dictionary<string, object>
@@ -147,6 +149,51 @@ namespace Mediatek86.dal
             ConnexionDataBase connexion = ConnexionDataBase.GetInstance(connexionString);
             connexion.ReqUpdate(req, parameters);
         }
+
+
+        
+        public static List<Absence> GetTheAbsences(Employee employee)
+        {
+            List<Absence> theAbsences = new List<Absence>();
+            string req = "select a.idpersonnel as idpersonnel, a.datedebut as datedebut, m.idmotif as idmotif, a.datefin as datefin, m.libelle as libelle ";
+            req += "from absence a join motif m using (idmotif) ";
+            req += "where a.idpersonnel = @idpersonnel";
+            Console.WriteLine(employee.IdEmployee);
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                {"@idpersonnel", employee.IdEmployee / 2}
+            };
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqSelect(req, parameters);
+            while (cursor.Read())
+            {
+                Absence absence = new Absence(employee, 
+                                               (DateTime)cursor.Field("datedebut"), 
+                                               (DateTime)cursor.Field("datefin"), 
+                                               (int)cursor.Field("idmotif"),
+                                               (string)cursor.Field("libelle")
+                                               );
+                theAbsences.Add(absence);
+            }
+            cursor.Close();
+            return theAbsences;
+        }
+
+        public static List<Reason> GetTheReasons()
+        {
+            List<Reason> theReasons = new List<Reason>();
+            string req = "select * from motif order by libelle;";
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqSelect(req, null);
+            while (cursor.Read())
+            {
+                Reason reason = new Reason((int)cursor.Field("idmotif"), (string)cursor.Field("libelle"));
+                theReasons.Add(reason);
+            }
+            cursor.Close();
+            return theReasons;
+        }
+        
     }
 }
 

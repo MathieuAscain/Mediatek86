@@ -106,6 +106,7 @@ namespace Mediatek86.View
             this.BtnAddAbsence.TabIndex = 1;
             this.BtnAddAbsence.Text = "Add";
             this.BtnAddAbsence.UseVisualStyleBackColor = false;
+            this.BtnAddAbsence.Click += new System.EventHandler(this.BtnAddAbsence_Click);
             // 
             // BtnRemoveAbsence
             // 
@@ -117,6 +118,7 @@ namespace Mediatek86.View
             this.BtnRemoveAbsence.TabIndex = 2;
             this.BtnRemoveAbsence.Text = "Remove";
             this.BtnRemoveAbsence.UseVisualStyleBackColor = false;
+            this.BtnRemoveAbsence.Click += new System.EventHandler(this.BtnRemoveAbsence_Click);
             // 
             // BtnModifyAbsence
             // 
@@ -128,6 +130,7 @@ namespace Mediatek86.View
             this.BtnModifyAbsence.TabIndex = 3;
             this.BtnModifyAbsence.Text = "Modify";
             this.BtnModifyAbsence.UseVisualStyleBackColor = false;
+            this.BtnModifyAbsence.Click += new System.EventHandler(this.BtnModifyAbsence_Click);
             // 
             // dataGridViewAbsence
             // 
@@ -136,6 +139,7 @@ namespace Mediatek86.View
             this.dataGridViewAbsence.Name = "dataGridViewAbsence";
             this.dataGridViewAbsence.RowHeadersWidth = 51;
             this.dataGridViewAbsence.RowTemplate.Height = 24;
+            this.dataGridViewAbsence.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewAbsence.Size = new System.Drawing.Size(401, 286);
             this.dataGridViewAbsence.TabIndex = 0;
             // 
@@ -174,6 +178,7 @@ namespace Mediatek86.View
             this.btnCancelAbsence.TabIndex = 5;
             this.btnCancelAbsence.Text = "Cancel";
             this.btnCancelAbsence.UseVisualStyleBackColor = false;
+            this.btnCancelAbsence.Click += new System.EventHandler(this.btnCancelAbsence_Click);
             // 
             // btnSaveAbsence
             // 
@@ -185,6 +190,7 @@ namespace Mediatek86.View
             this.btnSaveAbsence.TabIndex = 5;
             this.btnSaveAbsence.Text = "Save";
             this.btnSaveAbsence.UseVisualStyleBackColor = false;
+            this.btnSaveAbsence.Click += new System.EventHandler(this.btnSaveAbsence_Click);
             // 
             // comboBoxReason
             // 

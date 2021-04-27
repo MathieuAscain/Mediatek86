@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Mediatek86.Model
 {
     /// <summary>
@@ -37,6 +39,11 @@ namespace Mediatek86.Model
         public override string ToString()
         {
             return DepartmentName;
+        }
+
+        public static implicit operator Department(int v)
+        {
+            throw new NotImplementedException();
         }
     }
 }
