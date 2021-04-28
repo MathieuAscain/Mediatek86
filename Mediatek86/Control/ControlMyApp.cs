@@ -61,40 +61,82 @@ namespace Mediatek86.Control
             return AccessDataBase.GetTheDepartments();
         }
 
-        /// <summary>
-        ///  Request to remove an employee
-        /// </summary>
-        /// <param name="employee">employee to be removed from the list</param>
-        public void RemoveEmployeeFromAbsence(Employee employee)
+
+        public static int GetMaxEmployeeID()
         {
-            AccessDataBase.RemoveEmployeeFromAbsence(employee);
+            return AccessDataBase.GetMaxEmployeeID();
         }
-      
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="employee"></param>
+
+
+        /*
+        public static Employee AddEmployee(int idEmployee, 
+                                string familyName,
+                                string firstName,
+                                string phone,
+                                string mail,
+                                int idDepartment,
+                                string departmentName
+                               )
+        {
+
+            Employee employee = new Employee(idEmployee, 
+                                             familyName, 
+                                             firstName, 
+                                             phone, 
+                                             mail, 
+                                             idDepartment,
+                                             departmentName
+                                             );
+
+            AccessDataBase.AddEmployee(employee);
+
+            return employee;
+        }*/
+
+        public void AddEmployee(int idEmployee,
+                        string familyName,
+                        string firstName,
+                        string phone,
+                        string mail,
+                        int idDepartment,
+                        string departmentName
+                        )
+        {
+            Employee employee = new Employee(idEmployee,
+                                             familyName,
+                                             firstName,
+                                             phone,
+                                             mail,
+                                             idDepartment,
+                                             departmentName);
+
+            AccessDataBase.AddEmployee(employee);
+
+        }
+
+        public void UpdateEmployee(Employee employee,
+                                           string familyName,
+                                           string firstName,
+                                           string phone,
+                                           string mail,
+                                           int idDepartment)
+        {
+            employee.FamilyName = familyName;
+            employee.FirstName = firstName;
+            employee.Phone = phone;
+            employee.Mail = mail;
+            employee.IdDepartment = idDepartment;
+            AccessDataBase.UpdateEmployee(employee);
+        }
+
         public void RemoveEmployeeFromEmployee(Employee employee)
         {
             AccessDataBase.RemoveEmployeeFromEmployee(employee);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="employee"></param>
-        public void UpdateEmployee(Employee employee)
+        public void RemoveEmployeeFromAbsence(Employee employee)
         {
-            AccessDataBase.UpdateEmployee(employee);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="employee"></param>
-        public void AddModifiedEmployee(Employee employee)
-        {
-            AccessDataBase.AddModifiedEmployee(employee);
+            AccessDataBase.RemoveEmployeeFromAbsence(employee);
         }
 
         public void OpenAbsence(Employee employee)
@@ -102,13 +144,11 @@ namespace Mediatek86.Control
             new FrmManageAbsence(this, employee).ShowDialog();
         }
 
-        
         public List<Absence> GetTheAbsences(Employee employee)
         {
            return AccessDataBase.GetTheAbsences(employee);
         }
 
-        
         public List<Reason> GetTheReasons()
         {
             return AccessDataBase.GetTheReasons();

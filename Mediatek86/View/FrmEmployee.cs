@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Mediatek86.Control;
 using Mediatek86.Model;
-using System.ComponentModel;
 
 namespace Mediatek86.View
 {
@@ -13,11 +12,9 @@ namespace Mediatek86.View
     public partial class FrmEmployee : Form
     {
         private readonly ControlMyApp controlMyApp;
-
-        private bool modificationOngoing;
-        readonly BindingSource bindingSourceEmployees = new BindingSource();
-        readonly BindingSource bindingSourceDepartments = new BindingSource();
-        object mySender;
+        private readonly BindingSource bindingSourceEmployees = new BindingSource();
+        private readonly BindingSource bindingSourceDepartments = new BindingSource();
+        private object mySender;
 
 
         /// <summary>
@@ -74,10 +71,6 @@ namespace Mediatek86.View
             }
         }
 
-        /// <summary>
-        /// Clear the fields of the textBoxes
-        /// and reposition the comboBox to the first element of the list
-        /// </summary>
         private void EmptyEmployeeSelection()
         {
             textBoxFamilyName.Text = "";
@@ -102,7 +95,44 @@ namespace Mediatek86.View
             }
         }
 
-        private void methodeAdd()
+        private void LockDataGridViewAndAllowModifications()
+        {
+            grpBoxEmployeeData.Enabled = true;
+            grpBoxEmployee.Enabled = false;
+        }
+
+        private void UnlockDataGridViewAndBlockModifications()
+        {
+            grpBoxEmployeeData.Enabled = false;
+            grpBoxEmployee.Enabled = true;
+        }
+
+        private void BtnAddEmployee_Click(object sender, EventArgs e)
+        {
+            LockDataGridViewAndAllowModifications();
+            mySender = sender;
+            textBoxFamilyName.Focus();
+        }
+
+        private void BtnModifyEmployee_Click(object sender, System.EventArgs e)
+        {
+            LockDataGridViewAndAllowModifications();
+            mySender = sender;
+            Employee employee = (Employee)dataGridViewEmployee.CurrentRow.DataBoundItem;
+            FillTextBoxes(employee);
+            textBoxFamilyName.Focus();
+        }
+
+        private void FillTextBoxes(Employee employee)
+        {
+            textBoxFamilyName.Text = employee.FamilyName;
+            textBoxFirstName.Text = employee.FirstName;
+            textBoxPhone.Text = employee.Phone;
+            textBoxMail.Text = employee.Mail;
+            comboBoxDepartment.SelectedIndex = comboBoxDepartment.FindStringExact(employee.DepartmentName);
+        }
+        
+        private void BtnSaveEmployee_Click(object sender, EventArgs e)
         {
             if (TextBoxesAreNullOrEmpty())
             {
@@ -110,47 +140,52 @@ namespace Mediatek86.View
             }
             else
             {
-                Int32 idEmployee = dataGridViewEmployee.Rows.Count - 1;
-
-                bindingSourceEmployees.Add(new Employee(idEmployee,
-                                                 textBoxFamilyName.Text,
-                                                 textBoxFirstName.Text,
-                                                 textBoxPhone.Text,
-                                                 textBoxMail.Text,
-                                                 comboBoxDepartment.SelectedIndex,
-                                                 comboBoxDepartment.Text
-                                                 ));
-
+                Button btn = (Button)mySender;
+                textBoxFamilyName.Focus();
+                
+                switch (btn.Text)
+                {
+                    case "Add":
+                        AddEmployee();
+                        UnlockDataGridViewAndBlockModifications();
+                        EmptyEmployeeSelection();
+                        break;
+                    case "Modify":
+                        UpdateEmployee();
+                        UnlockDataGridViewAndBlockModifications();
+                        EmptyEmployeeSelection();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
-
-
-    
-
-        /// <summary>
-        /// Modify the fields of the employee selected in the dataGridView
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnModifyEmployee_Click(object sender, System.EventArgs e)
+        private void AddEmployee()
         {
-            if (dataGridViewEmployee.SelectedRows.Count > 0)
-            {
-                modificationOngoing = true;
-                grpBoxEmployee.Enabled = false;
-                lblShowButtonClicked.Text = "Modifying";
-                Employee selectedEmployee = dataGridViewEmployee.SelectedRows[0].DataBoundItem as Employee;
-                textBoxFamilyName.Text = selectedEmployee.FamilyName;
-                textBoxFirstName.Text = selectedEmployee.FirstName;
-                textBoxPhone.Text = selectedEmployee.Phone;
-                textBoxMail.Text = selectedEmployee.Mail;
-                comboBoxDepartment.SelectedIndex = comboBoxDepartment.FindStringExact(selectedEmployee.DepartmentName);
-            }
-            else
-            {
-                MessageBox.Show("A line should be selected.", "Information");
-            }
+            int newEmployeeID = ControlMyApp.GetMaxEmployeeID() + 1;
+            controlMyApp.AddEmployee(newEmployeeID,
+                                     textBoxFamilyName.Text,
+                                     textBoxFirstName.Text,
+                                     textBoxPhone.Text,
+                                     textBoxMail.Text,
+                                     comboBoxDepartment.SelectedIndex + 1,
+                                     comboBoxDepartment.Text);
+
+            FillEmployeesList();
+        }
+
+        private void UpdateEmployee()
+        {
+            Employee employee = (Employee)dataGridViewEmployee.CurrentRow.DataBoundItem;
+
+            controlMyApp.UpdateEmployee(employee,
+                                        textBoxFamilyName.Text,
+                                        textBoxFirstName.Text,
+                                        textBoxPhone.Text,
+                                        textBoxMail.Text,
+                                        comboBoxDepartment.SelectedIndex + 1
+                                        );
         }
 
         private void BtnRemoveEmployee_Click(object sender, EventArgs e)
@@ -171,24 +206,15 @@ namespace Mediatek86.View
             }
         }
 
-   
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void BtnCancelEmployee_Click(object sender, System.EventArgs e)
         {
             if (MessageBox.Show("Do you really want to cancel ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 EmptyEmployeeSelection();
-                grpBoxEmployee.Enabled = true;
-                modificationOngoing = false;
+                UnlockDataGridViewAndBlockModifications();
                 lblShowButtonClicked.Text = "Adding";
             }
         }
-
 
         private void BtnAccessAbsence_Click(object sender, EventArgs e)
         {
@@ -201,51 +227,7 @@ namespace Mediatek86.View
             {
                 MessageBox.Show("A line should be selected.", "Information");
             } 
-        }
-
-        private void BtnAddEmployee_Click(object sender, EventArgs e)
-        {
-            grpBoxEmployeeData.Enabled = true;
-            mySender = sender;
-            //Button clickedButton = (Button)sender;
-        }
-
-        private void BtnSaveEmployee_Click(object sender, EventArgs e)
-        {
-
-            if (TextBoxesAreNullOrEmpty())
-            {
-                MessageBox.Show("All the fields shall be filled", "Information");
-            }
-            else
-            {
-                Button btn = (Button)mySender;
-
-                switch(btn.Text)
-                {
-                    case "Add":
-                        AddEmployee();
-                        break;
-                    case "Modify":
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        private void AddEmployee()
-        {
-            Int32 idEmployee = dataGridViewEmployee.Rows.Count - 1;
-            bindingSourceEmployees.Add(new Employee(idEmployee,
-            textBoxFamilyName.Text,
-            textBoxFirstName.Text,
-            textBoxPhone.Text,
-            textBoxMail.Text,
-            comboBoxDepartment.SelectedIndex,
-            comboBoxDepartment.Text
-            ));
-        }
+        }    
     }
 }
 
