@@ -31,17 +31,17 @@ namespace Mediatek86.View
         {
             this.grpBoxEmployee = new System.Windows.Forms.GroupBox();
             this.panelEmployee = new System.Windows.Forms.Panel();
-            this.BtnSaveEmployee = new System.Windows.Forms.Button();
             this.BtnRemoveEmployee = new System.Windows.Forms.Button();
+            this.BtnAddEmployee = new System.Windows.Forms.Button();
             this.BtnModifyEmployee = new System.Windows.Forms.Button();
             this.dataGridViewEmployee = new System.Windows.Forms.DataGridView();
+            this.BtnSaveEmployee = new System.Windows.Forms.Button();
             this.BtnAccessAbsence = new System.Windows.Forms.Button();
             this.lblTitleEmployee = new System.Windows.Forms.Label();
             this.lblShowButtonClicked = new System.Windows.Forms.Label();
             this.grpBoxEmployeeData = new System.Windows.Forms.GroupBox();
             this.panelEmployeeData = new System.Windows.Forms.Panel();
             this.BtnCancelEmployee = new System.Windows.Forms.Button();
-            this.BtnAddEmployee = new System.Windows.Forms.Button();
             this.comboBoxDepartment = new System.Windows.Forms.ComboBox();
             this.textBoxMail = new System.Windows.Forms.TextBox();
             this.textBoxPhone = new System.Windows.Forms.TextBox();
@@ -80,18 +80,6 @@ namespace Mediatek86.View
             this.panelEmployee.Size = new System.Drawing.Size(426, 65);
             this.panelEmployee.TabIndex = 5;
             // 
-            // BtnSaveEmployee
-            // 
-            this.BtnSaveEmployee.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.BtnSaveEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSaveEmployee.Location = new System.Drawing.Point(24, 9);
-            this.BtnSaveEmployee.Name = "BtnSaveEmployee";
-            this.BtnSaveEmployee.Size = new System.Drawing.Size(109, 42);
-            this.BtnSaveEmployee.TabIndex = 1;
-            this.BtnSaveEmployee.Text = "Save";
-            this.BtnSaveEmployee.UseVisualStyleBackColor = false;
-            this.BtnSaveEmployee.Click += new System.EventHandler(this.BtnSaveEmployee_Click);
-            // 
             // BtnRemoveEmployee
             // 
             this.BtnRemoveEmployee.BackColor = System.Drawing.SystemColors.ControlDark;
@@ -103,6 +91,18 @@ namespace Mediatek86.View
             this.BtnRemoveEmployee.Text = "Remove";
             this.BtnRemoveEmployee.UseVisualStyleBackColor = false;
             this.BtnRemoveEmployee.Click += new System.EventHandler(this.BtnRemoveEmployee_Click);
+            // 
+            // BtnAddEmployee
+            // 
+            this.BtnAddEmployee.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BtnAddEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAddEmployee.Location = new System.Drawing.Point(48, 14);
+            this.BtnAddEmployee.Name = "BtnAddEmployee";
+            this.BtnAddEmployee.Size = new System.Drawing.Size(109, 42);
+            this.BtnAddEmployee.TabIndex = 5;
+            this.BtnAddEmployee.Text = "Add";
+            this.BtnAddEmployee.UseVisualStyleBackColor = false;
+            this.BtnAddEmployee.Click += new System.EventHandler(this.BtnAddEmployee_Click);
             // 
             // BtnModifyEmployee
             // 
@@ -126,6 +126,18 @@ namespace Mediatek86.View
             this.dataGridViewEmployee.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewEmployee.Size = new System.Drawing.Size(426, 320);
             this.dataGridViewEmployee.TabIndex = 0;
+            // 
+            // BtnSaveEmployee
+            // 
+            this.BtnSaveEmployee.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BtnSaveEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSaveEmployee.Location = new System.Drawing.Point(24, 9);
+            this.BtnSaveEmployee.Name = "BtnSaveEmployee";
+            this.BtnSaveEmployee.Size = new System.Drawing.Size(109, 42);
+            this.BtnSaveEmployee.TabIndex = 1;
+            this.BtnSaveEmployee.Text = "Save";
+            this.BtnSaveEmployee.UseVisualStyleBackColor = false;
+            this.BtnSaveEmployee.Click += new System.EventHandler(this.BtnSaveEmployee_Click);
             // 
             // BtnAccessAbsence
             // 
@@ -201,18 +213,6 @@ namespace Mediatek86.View
             this.BtnCancelEmployee.Text = "Cancel";
             this.BtnCancelEmployee.UseVisualStyleBackColor = false;
             this.BtnCancelEmployee.Click += new System.EventHandler(this.BtnCancelEmployee_Click);
-            // 
-            // BtnAddEmployee
-            // 
-            this.BtnAddEmployee.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.BtnAddEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAddEmployee.Location = new System.Drawing.Point(37, 14);
-            this.BtnAddEmployee.Name = "BtnAddEmployee";
-            this.BtnAddEmployee.Size = new System.Drawing.Size(109, 42);
-            this.BtnAddEmployee.TabIndex = 5;
-            this.BtnAddEmployee.Text = "Add";
-            this.BtnAddEmployee.UseVisualStyleBackColor = false;
-            this.BtnAddEmployee.Click += new System.EventHandler(this.BtnAddEmployee_Click);
             // 
             // comboBoxDepartment
             // 

@@ -66,7 +66,8 @@ namespace Mediatek86.Model
                         string phone,
                         string mail,
                         int idDepartment,
-                        string departmentName)
+                        string departmentName
+                        )
         {
             IdEmployee = idEmployee;
             _familyName = familyName;
@@ -75,8 +76,7 @@ namespace Mediatek86.Model
             _mail = mail;
             _idDepartment = idDepartment;
             DepartmentName = departmentName;
-           
         }
-
+      
     }
 }

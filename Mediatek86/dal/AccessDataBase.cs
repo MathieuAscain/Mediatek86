@@ -3,24 +3,12 @@ using Mediatek86.Model;
 using System;
 using System.Collections.Generic;
 
-
 namespace Mediatek86.dal
 {
-    /// <summary>
-    /// Class to access to the database
-    /// and to generate the cursor with the request passed by parameter
-    /// </summary>
     public class AccessDataBase
     {
         private static readonly string connexionString = "server=localhost;user id=gestionpersonnel;password=mathieu;database=gestionpersonnel;SslMode=none";
 
-        /// <summary>
-        /// Check if the input given by the manager fits with the data stored in the database
-        /// and create the cursor with the parameters request
-        /// </summary>
-        /// <param name="login">login given by the user</param>
-        /// <param name="password">password given by the user</param>
-        /// <returns>true if the request return at least a tuple</returns>
         public static Boolean ControlAuthentification(string login, string password)
         {
             string req = "select * from responsable ";
@@ -30,92 +18,77 @@ namespace Mediatek86.dal
                 { "@login", login },
                 { "@pwd", password }
             };
-            ConnexionDataBase curs = ConnexionDataBase.GetInstance(connexionString);
-            curs.ReqSelect(req, parameters);
-            if (curs.Read())
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqSelect(req, parameters);
+            if (cursor.Read())
             {
-                curs.Close();
+                cursor.Close();
                 return true;
             }
             else
             {
-                curs.Close();
+                cursor.Close();
                 return false;
             }
         }
 
-        /// <summary>
-        /// Get and return the employee from the database
-        /// </summary>
-        /// <returns>liste des développeurs</returns>
         public static List<Employee> GetTheEmployees()
         {
             List<Employee> theEmployee = new List<Employee>();
             string req = "SELECT p.idpersonnel as idpersonnel, p.nom as nom, p.prenom as prenom, p.tel as tel, p.mail as mail, s.idservice as idservice, s.nom as service ";
             req += "from personnel p join service s on (p.idservice = s.idservice) ";
             req += "order by nom, prenom;";
-            ConnexionDataBase curs = ConnexionDataBase.GetInstance(connexionString);
-            curs.ReqSelect(req, null);
-            while (curs.Read())
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqSelect(req, null);
+            while (cursor.Read())
             {
                 
-                Employee employee = new Employee((int)curs.Field("idpersonnel"), (string)curs.Field("nom"), (string)curs.Field("prenom"), (string)curs.Field("tel"), (string)curs.Field("mail"), (int)curs.Field("idservice"), (string)curs.Field("service"));
+                Employee employee = new Employee((int)cursor.Field("idpersonnel"), 
+                                                 (string)cursor.Field("nom"), 
+                                                 (string)cursor.Field("prenom"), 
+                                                 (string)cursor.Field("tel"), 
+                                                 (string)cursor.Field("mail"), 
+                                                 (int)cursor.Field("idservice"), 
+                                                 (string)cursor.Field("service"));
                 theEmployee.Add(employee);
             }
-            curs.Close();
+            cursor.Close();
             return theEmployee;
         }
 
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            public static List<Department> GetTheDepartments()
+        public static int GetMaxEmployeeID()
         {
-            List<Department> theDepartments = new List<Department>();
-            string req = "select * from service order by nom;";
-            ConnexionDataBase curs = ConnexionDataBase.GetInstance(connexionString);
-            curs.ReqSelect(req, null);
-            while (curs.Read())
+            string req = "select max(idpersonnel) from personnel";
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqSelect(req, null);
+            int max = 0;
+            Console.WriteLine("Max id = ", max);
+            if (cursor.Read())
             {
-                Department department = new Department((int)curs.Field("idservice"), (string)curs.Field("nom"));
-                theDepartments.Add(department);
+                max = (int)cursor.Field("max(idpersonnel)");
             }
-            curs.Close();
-            return theDepartments;
+            cursor.Close();
+            return max;
         }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="employee"></param>
-            public static void RemoveEmployeeFromAbsence(Employee employee)
+        public static void AddEmployee(Employee employee)
         {
-            string req = "delete from absence where idpersonnel = @idpersonnelAbsence ";
+            string req = "insert into personnel(idpersonnel, idservice, nom, prenom, tel, mail) ";
+            req += "values (@idpersonnel, @idservice, @nom, @prenom, @tel, @mail);";
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
-                {"@idpersonnelAbsence", employee.IdEmployee}
+                {"@idpersonnel", employee.IdEmployee },
+                {"@nom", employee.FamilyName },
+                {"@prenom", employee.FirstName },
+                {"@tel", employee.Phone },
+                {"@mail", employee.Mail },
+                {"@idservice", employee.IdDepartment },
+           
             };
-            ConnexionDataBase connexion = ConnexionDataBase.GetInstance(connexionString);
-            connexion.ReqUpdate(req, parameters);
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="employee"></param>
-        public static void RemoveEmployeeFromEmployee(Employee employee)
-        {
-            string req = "delete from personnel where idpersonnel = @idpersonnelPersonnel;";
-            Dictionary<string, object> parameters = new Dictionary<string, object>
-            {
-                {"@idpersonnelPersonnel", employee.IdEmployee}
-            };
-            ConnexionDataBase connexion = ConnexionDataBase.GetInstance(connexionString);
-            connexion.ReqUpdate(req, parameters);
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqUpdate(req, parameters);
         }
-
 
         public static void UpdateEmployee(Employee employee)
         {
@@ -130,28 +103,49 @@ namespace Mediatek86.dal
                 {"@tel", employee.Phone },
                 {"@mail", employee.Mail }
             };
-            ConnexionDataBase connexion = ConnexionDataBase.GetInstance(connexionString);
-            connexion.ReqUpdate(req, parameters);
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqUpdate(req, parameters);
         }
 
-       public static void AddModifiedEmployee(Employee employee)
+     
+        public static void RemoveEmployeeFromAbsence(Employee employee)
         {
-            string req = "insert into personnel(nom, prenom, tel, mail, idservice) ";
-            req += "values (@nom, @prenom, @tel, @mail, @idservice);";
+            string req = "delete from absence where idpersonnel = @idpersonnelAbsence ";
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
-                {"@nom", employee.FamilyName },
-                {"@prenom", employee.FirstName },
-                {"@tel", employee.Phone },
-                {"@mail", employee.Mail },
-                {"@idservice", employee.IdDepartment }
+                {"@idpersonnelAbsence", employee.IdEmployee}
             };
-            ConnexionDataBase connexion = ConnexionDataBase.GetInstance(connexionString);
-            connexion.ReqUpdate(req, parameters);
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqUpdate(req, parameters);
         }
 
+        public static void RemoveEmployeeFromEmployee(Employee employee)
+        {
+            string req = "delete from personnel where idpersonnel = @idpersonnelPersonnel;";
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                {"@idpersonnelPersonnel", employee.IdEmployee}
+            };
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqUpdate(req, parameters);
+        }
 
-        
+        public static List<Department> GetTheDepartments()
+        {
+            List<Department> theDepartments = new List<Department>();
+            string req = "select * from service order by nom;";
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqSelect(req, null);
+            while (cursor.Read())
+            {
+                Department department = new Department((int)cursor.Field("idservice"), 
+                                                       (string)cursor.Field("nom"));
+                theDepartments.Add(department);
+            }
+            cursor.Close();
+            return theDepartments;
+        }
+
         public static List<Absence> GetTheAbsences(Employee employee)
         {
             List<Absence> theAbsences = new List<Absence>();
@@ -187,13 +181,13 @@ namespace Mediatek86.dal
             cursor.ReqSelect(req, null);
             while (cursor.Read())
             {
-                Reason reason = new Reason((int)cursor.Field("idmotif"), (string)cursor.Field("libelle"));
+                Reason reason = new Reason((int)cursor.Field("idmotif"), 
+                                           (string)cursor.Field("libelle"));
                 theReasons.Add(reason);
             }
             cursor.Close();
             return theReasons;
-        }
-        
+        } 
     }
 }
 
