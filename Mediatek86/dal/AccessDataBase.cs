@@ -151,11 +151,12 @@ namespace Mediatek86.dal
             List<Absence> theAbsences = new List<Absence>();
             string req = "select a.idpersonnel as idpersonnel, a.datedebut as datedebut, m.idmotif as idmotif, a.datefin as datefin, m.libelle as libelle ";
             req += "from absence a join motif m using (idmotif) ";
-            req += "where a.idpersonnel = @idpersonnel";
+            req += "where a.idpersonnel = @idpersonnel ";
+            req += "order by datedebut DESC";
             Console.WriteLine(employee.IdEmployee);
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
-                {"@idpersonnel", employee.IdEmployee / 2}
+                {"@idpersonnel", employee.IdEmployee}
             };
             ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
             cursor.ReqSelect(req, parameters);
@@ -176,7 +177,7 @@ namespace Mediatek86.dal
         public static List<Reason> GetTheReasons()
         {
             List<Reason> theReasons = new List<Reason>();
-            string req = "select * from motif order by libelle;";
+            string req = "select * from motif ";
             ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
             cursor.ReqSelect(req, null);
             while (cursor.Read())
@@ -187,7 +188,37 @@ namespace Mediatek86.dal
             }
             cursor.Close();
             return theReasons;
-        } 
+        }
+
+        public static void AddAbsence(Employee employee, DateTime firstDay, DateTime lastDay, int idReason)
+        {
+            string req = "insert into absence(idpersonnel, datedebut, idmotif, datefin) ";
+            req += "values (@idpersonnel, @datedebut, @idmotif, @datefin) ";
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                {"@idpersonnel", employee.IdEmployee },
+                {"@datedebut", firstDay },
+                {"@idmotif", idReason },
+                {"@datefin", lastDay }
+            };
+
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqUpdate(req, parameters);
+        }
+
+        public static void RemoveAbsenceFromEmployee(Absence absence, Employee employee)
+        {
+            string req = "delete from absence ";
+            req += "where idpersonnel = @idpersonnel ";
+            req += "and datedebut = @datedebut";
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                {"@idpersonnel", employee.IdEmployee},
+                {"@datedebut", absence.FirstDay}
+            };
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqUpdate(req, parameters);
+        }
     }
 }
 
