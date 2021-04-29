@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Mediatek86.dal;
 using Mediatek86.Model;
 using Mediatek86.View;
@@ -67,32 +68,6 @@ namespace Mediatek86.Control
             return AccessDataBase.GetMaxEmployeeID();
         }
 
-
-        /*
-        public static Employee AddEmployee(int idEmployee, 
-                                string familyName,
-                                string firstName,
-                                string phone,
-                                string mail,
-                                int idDepartment,
-                                string departmentName
-                               )
-        {
-
-            Employee employee = new Employee(idEmployee, 
-                                             familyName, 
-                                             firstName, 
-                                             phone, 
-                                             mail, 
-                                             idDepartment,
-                                             departmentName
-                                             );
-
-            AccessDataBase.AddEmployee(employee);
-
-            return employee;
-        }*/
-
         public void AddEmployee(int idEmployee,
                         string familyName,
                         string firstName,
@@ -153,8 +128,47 @@ namespace Mediatek86.Control
         {
             return AccessDataBase.GetTheReasons();
         }
+
+
+        public void AddAbsence(Employee employee, DateTime firstDay, DateTime lastDay, int idReason)
+        {
+            AccessDataBase.AddAbsence(employee, firstDay, lastDay, idReason);
+        }
+
+        public bool FirstDayPredateLastDate(DateTime firstDay, DateTime lastDay)
+        {
+            if (lastDay < firstDay)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool FirstDayWasNeverPicked(DateTime day, DataGridView dataGridViewAbsence)
+        {
+            foreach (DataGridViewRow row in dataGridViewAbsence.Rows)
+            {
+                if (row.Cells["FirstDay"].Value.Equals(day))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         
 
+        public void UpdateAbsence(Employee employee, DateTime firstDay, DateTime lastDay, int idReason)
+        {
+
+        }
+
+        public void RemoveAbsenceFromEmployee(Absence absence, Employee _employee)
+        {
+            AccessDataBase.RemoveAbsenceFromEmployee(absence, _employee);
+        }
 
     }
 }
