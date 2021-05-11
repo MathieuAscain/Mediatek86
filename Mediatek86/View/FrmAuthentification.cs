@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Mediatek86.Control;
 
@@ -22,6 +23,8 @@ namespace Mediatek86.View
         {
             InitializeComponent();
             this.controlMyApp = controlMyApp;
+            BtnConnexion.BackColor = Color.Aquamarine;
+
         }
 
         /// <summary>
@@ -34,18 +37,18 @@ namespace Mediatek86.View
         {
             if (String.IsNullOrEmpty(textBoxLogin.Text) || String.IsNullOrEmpty(textBoxPassword.Text))
             {
+                BtnConnexion.BackColor = Color.Coral;
                 MessageBox.Show("All the fields shall be filled", "Information");
+
             }
-            else
+            else if (!controlMyApp.ControlAuthentification(textBoxLogin.Text, textBoxPassword.Text))
             {
-                if (!controlMyApp.ControlAuthentification(textBoxLogin.Text, textBoxPassword.Text))
-                {
+                    BtnConnexion.BackColor = Color.Coral;
                     textBoxLogin.Text = "";
                     textBoxPassword.Text = "";
                     textBoxLogin.Focus();
                     MessageBox.Show("Wrong authentification or you are not admin", "Alert");
-
-                }
+                    BtnConnexion.BackColor = Color.Aquamarine;
             }
         }
     }

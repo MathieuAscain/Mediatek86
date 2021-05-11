@@ -166,7 +166,7 @@ namespace Mediatek86.View
             // 
             this.lblShowButtonClicked.AutoSize = true;
             this.lblShowButtonClicked.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblShowButtonClicked.Location = new System.Drawing.Point(226, 18);
+            this.lblShowButtonClicked.Location = new System.Drawing.Point(157, 18);
             this.lblShowButtonClicked.Name = "lblShowButtonClicked";
             this.lblShowButtonClicked.Size = new System.Drawing.Size(122, 24);
             this.lblShowButtonClicked.TabIndex = 3;
@@ -309,6 +309,7 @@ namespace Mediatek86.View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GrayText;
             this.ClientSize = new System.Drawing.Size(902, 484);
             this.Controls.Add(this.grpBoxEmployeeData);
             this.Controls.Add(this.lblTitleEmployee);

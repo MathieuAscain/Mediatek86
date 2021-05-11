@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connexion\ConnexionDataBase.cs" />
-    <Compile Include="Control\ControlMyApp.cs" />
+    <Compile Include="ControlMyApp\ControlMyApp.cs" />
     <Compile Include="dal\AccessDataBase.cs" />
     <Compile Include="Model\Absence.cs" />
     <Compile Include="Model\Employee.cs" />

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Mediatek86.Control;
 using Mediatek86.Model;
@@ -14,7 +17,8 @@ namespace Mediatek86.View
         private readonly ControlMyApp controlMyApp;
         private readonly BindingSource bindingSourceEmployees = new BindingSource();
         private readonly BindingSource bindingSourceDepartments = new BindingSource();
-        private object mySender;
+        private object myOptionSelected;
+        private readonly ArrayList senderList = new ArrayList();
 
 
         /// <summary>
@@ -35,9 +39,17 @@ namespace Mediatek86.View
         public void Init()
         {
             grpBoxEmployeeData.Enabled = false;
+
+            BtnAddEmployee.BackColor = Color.Aquamarine;
+            BtnModifyEmployee.BackColor = Color.Aquamarine;
+            BtnRemoveEmployee.BackColor = Color.Aquamarine;
+            BtnAccessAbsence.BackColor = Color.Aquamarine;
+            BtnSaveEmployee.BackColor = Color.Aquamarine;
+            BtnCancelEmployee.BackColor = Color.Aquamarine;
+
             FillEmployeesList();
             FillDepartmentsList();
-            
+            lblShowButtonClicked.Text = "Blocked/Use left buttons";
         }
 
         /// <summary>
@@ -107,22 +119,6 @@ namespace Mediatek86.View
             grpBoxEmployee.Enabled = true;
         }
 
-        private void BtnAddEmployee_Click(object sender, EventArgs e)
-        {
-            LockDataGridViewAndAllowModifications();
-            mySender = sender;
-            textBoxFamilyName.Focus();
-        }
-
-        private void BtnModifyEmployee_Click(object sender, System.EventArgs e)
-        {
-            LockDataGridViewAndAllowModifications();
-            mySender = sender;
-            Employee employee = (Employee)dataGridViewEmployee.CurrentRow.DataBoundItem;
-            FillTextBoxes(employee);
-            textBoxFamilyName.Focus();
-        }
-
         private void FillTextBoxes(Employee employee)
         {
             textBoxFamilyName.Text = employee.FamilyName;
@@ -130,35 +126,6 @@ namespace Mediatek86.View
             textBoxPhone.Text = employee.Phone;
             textBoxMail.Text = employee.Mail;
             comboBoxDepartment.SelectedIndex = comboBoxDepartment.FindStringExact(employee.DepartmentName);
-        }
-        
-        private void BtnSaveEmployee_Click(object sender, EventArgs e)
-        {
-            if (TextBoxesAreNullOrEmpty())
-            {
-                MessageBox.Show("All the fields shall be filled", "Information");
-            }
-            else
-            {
-                Button btn = (Button)mySender;
-                textBoxFamilyName.Focus();
-                
-                switch (btn.Text)
-                {
-                    case "Add":
-                        AddEmployee();
-                        UnlockDataGridViewAndBlockModifications();
-                        EmptyEmployeeSelection();
-                        break;
-                    case "Modify":
-                        UpdateEmployee();
-                        UnlockDataGridViewAndBlockModifications();
-                        EmptyEmployeeSelection();
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
 
         private void AddEmployee()
@@ -188,45 +155,130 @@ namespace Mediatek86.View
                                         );
         }
 
+        private void ResetOriginalColor()
+        {
+            foreach(Object sender in senderList)
+            {
+                Button button = (Button)sender;
+                button.BackColor = Color.Aquamarine;
+            }
+        }
+
+        private void BtnAddEmployee_Click(object sender, EventArgs e)
+        {
+            senderList.Add(sender);
+            LockDataGridViewAndAllowModifications();
+            lblShowButtonClicked.Text = "Adding";
+            BtnAddEmployee.BackColor = Color.Green;
+            myOptionSelected = sender;
+            textBoxFamilyName.Focus();
+        }
+
+        private void BtnModifyEmployee_Click(object sender, System.EventArgs e)
+        {
+            senderList.Add(sender);
+            if (dataGridViewEmployee.SelectedRows.Count == 1)
+            {
+                BtnModifyEmployee.BackColor = Color.Green;
+                LockDataGridViewAndAllowModifications();
+                lblShowButtonClicked.Text = "Modification";
+                myOptionSelected = sender;
+                Employee employee = (Employee)dataGridViewEmployee.CurrentRow.DataBoundItem;
+                FillTextBoxes(employee);
+                textBoxFamilyName.Focus();
+            }
+            else if (dataGridViewEmployee.SelectedRows.Count > 1)
+            {
+                BtnModifyEmployee.BackColor = Color.Orange;
+                MessageBox.Show("Only a line should be selected", "Information");
+                BtnModifyEmployee.BackColor = Color.Aquamarine;
+            }
+        }
+
         private void BtnRemoveEmployee_Click(object sender, EventArgs e)
         {
-            if (dataGridViewEmployee.SelectedRows.Count > 0)
+            senderList.Add(sender);
+            if (dataGridViewEmployee.SelectedRows.Count == 1)
             {
+                BtnRemoveEmployee.BackColor = Color.Green;
                 Employee employee = dataGridViewEmployee.SelectedRows[0].DataBoundItem as Employee;
-                if (MessageBox.Show("Do you really want to delete the line " + employee.FamilyName + " " + employee.FirstName + " ?", "Confirmation before removing the line", MessageBoxButtons.YesNo) == DialogResult.Yes) { }
+                if (MessageBox.Show("Do you really want to delete the line " + employee.FamilyName + " " + employee.FirstName + " ?", "Confirmation before removing the line", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     controlMyApp.RemoveEmployeeFromAbsence(employee);
                     controlMyApp.RemoveEmployeeFromEmployee(employee);
                     FillEmployeesList();
                 }
             }
+            else if (dataGridViewEmployee.SelectedRows.Count > 1)
+            {
+                BtnRemoveEmployee.BackColor = Color.Orange;
+                MessageBox.Show("Only a line should be selected.", "Information");
+            }
+            ResetOriginalColor();
+            //BtnRemoveEmployee.BackColor = Color.Aquamarine;
+        }
+        
+        private void BtnSaveEmployee_Click(object sender, EventArgs e)
+        {
+            //myFinalSelection = sender;
+            senderList.Add(sender);
+            if (TextBoxesAreNullOrEmpty())
+            {
+                BtnSaveEmployee.BackColor = Color.Orange;
+                MessageBox.Show("All the fields shall be filled", "Information");
+            }
             else
             {
-                MessageBox.Show("A lign should be selected.", "Information");
+               
+                Button btn = (Button)myOptionSelected;
+                textBoxFamilyName.Focus();
+                
+                switch (btn.Text)
+                {
+                    case "Add":
+                        AddEmployee();
+                        UnlockDataGridViewAndBlockModifications();
+                        EmptyEmployeeSelection();
+                        break;
+                    case "Modify":
+                        UpdateEmployee();
+                        UnlockDataGridViewAndBlockModifications();
+                        EmptyEmployeeSelection();
+                        break;
+                    default:
+                        break;
+                }
             }
+            ResetOriginalColor();
         }
 
         private void BtnCancelEmployee_Click(object sender, System.EventArgs e)
         {
+            //myFinalSelection = sender;
+            senderList.Add(sender);
+            BtnCancelEmployee.BackColor = Color.Green;
             if (MessageBox.Show("Do you really want to cancel ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 EmptyEmployeeSelection();
                 UnlockDataGridViewAndBlockModifications();
-                lblShowButtonClicked.Text = "Adding";
+                lblShowButtonClicked.Text = "Pick a left button";
+                ResetOriginalColor();
             }
         }
 
         private void BtnAccessAbsence_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewEmployee.SelectedRows.Count > 0)
+        { 
+            if (dataGridViewEmployee.SelectedRows.Count == 1)
             {
                 Employee employee = (Employee)bindingSourceEmployees.List[bindingSourceEmployees.Position];
                 controlMyApp.OpenAbsence(employee);
             }
-            else
+            else if(dataGridViewEmployee.SelectedRows.Count > 1)
             {
-                MessageBox.Show("A line should be selected.", "Information");
-            } 
+                BtnAccessAbsence.BackColor = Color.Orange;
+                MessageBox.Show("Only a line should be selected.", "Information");
+                
+            }
         }    
     }
 }

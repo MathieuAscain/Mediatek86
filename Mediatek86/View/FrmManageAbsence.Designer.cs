@@ -178,6 +178,7 @@ namespace Mediatek86.View
             this.BtnCancelAbsence.TabIndex = 5;
             this.BtnCancelAbsence.Text = "Cancel";
             this.BtnCancelAbsence.UseVisualStyleBackColor = false;
+            this.BtnCancelAbsence.Click += new System.EventHandler(this.BtnCancelAbsence_Click);
             // 
             // BtnSaveAbsence
             // 
@@ -252,6 +253,7 @@ namespace Mediatek86.View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GrayText;
             this.ClientSize = new System.Drawing.Size(876, 511);
             this.Controls.Add(this.grpBoxAbsenceData);
             this.Controls.Add(this.grpBoxAbsence);
