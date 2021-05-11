@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using Mediatek86.Control;
 using Mediatek86.Model;
@@ -12,10 +14,11 @@ namespace Mediatek86.View
     public partial class FrmManageAbsence : Form
     {
         private readonly ControlMyApp _controlMyApp;
-        private Employee _employee;
-        private object mySender;
+        private readonly Employee _employee;
         private readonly BindingSource bindingSourceReasons = new BindingSource();
         private readonly BindingSource bindingSourceAbsences = new BindingSource();
+        private object myOptionSelected;
+        private readonly ArrayList senderList = new ArrayList();
 
         /// <summary>
         /// 
@@ -29,9 +32,13 @@ namespace Mediatek86.View
             _employee = employee;
         }
 
-
         public void Init(Employee employee)
         {
+            BtnAddAbsence.BackColor = Color.Aquamarine;
+            BtnModifyAbsence.BackColor = Color.Aquamarine;
+            BtnRemoveAbsence.BackColor = Color.Aquamarine;
+            BtnSaveAbsence.BackColor = Color.Aquamarine;
+            BtnCancelAbsence.BackColor = Color.Aquamarine;
             UnlockDataGridViewAndBlockModifications();
             FillAbsenceList(employee);
             FillComboBoxReason();
@@ -57,8 +64,8 @@ namespace Mediatek86.View
             {
                 Console.WriteLine(e.Message);
             }
-            
         }
+
         public void FillComboBoxReason()
         {
             List<Reason> theReasons = _controlMyApp.GetTheReasons();
@@ -68,9 +75,8 @@ namespace Mediatek86.View
             {
                 comboBoxReason.SelectedIndex = 0;
             }
-          
-
         }
+
         private void LockDataGridViewAndAllowModifications()
         {
             grpBoxAbsence.Enabled = false;
@@ -88,21 +94,46 @@ namespace Mediatek86.View
             lblPersonConcerned.Text = employee.FamilyName + " " + employee.FirstName;
         }
 
-        private void BtnAddAbsence_Click(object sender, EventArgs e)
+        public void ResetAbsenceSelection()
         {
-
-            LockDataGridViewAndAllowModifications();
-            mySender = sender;
-            dateTimePickerStart.Focus();
-
+            dateTimePickerStart.Value = DateTime.Now;
+            dateTimePickerEnd.Value = DateTime.Now;
+            comboBoxReason.SelectedIndex = 0;
         }
 
-        private void BtnModifyAbsence_Click(object sender, EventArgs e)
+        private void UpdateDataGridViewAbsences()
         {
-            LockDataGridViewAndAllowModifications();
-            SetAbsenceData();
-            mySender = sender;
-            dateTimePickerStart.Focus();
+            List<Absence> theNewAbsences = _controlMyApp.GetTheAbsences(_employee);
+            bindingSourceAbsences.DataSource = theNewAbsences;
+            dataGridViewAbsence.DataSource = bindingSourceAbsences;
+        }
+
+        private bool FirstDayPredateLastDate(DateTime firstDay, DateTime lastDay)
+        {
+            return _controlMyApp.FirstDayPredateLastDate(firstDay, lastDay);
+        }
+
+        private bool FirstDayWasNeverPicked(DateTime firstDay)
+        {
+            return _controlMyApp.FirstDayWasNeverPicked(firstDay, dataGridViewAbsence);
+        }
+
+        private void AddAbsence(Employee employee,
+                           DateTime firstDay,
+                           DateTime lastDay,
+                           int idReason
+                           )
+        {
+            _controlMyApp.AddAbsence(employee, firstDay, lastDay, idReason);
+        }
+
+        public void UpdateAbsence(Employee employee,
+                           DateTime firstDay,
+                           DateTime lastDay,
+                           int idReason
+                           )
+        {
+            _controlMyApp.UpdateAbsence(employee, firstDay, lastDay, idReason);
         }
 
         private void SetAbsenceData()
@@ -117,34 +148,82 @@ namespace Mediatek86.View
             comboBoxReason.SelectedIndex = absence.IdReason - 1;
         }
 
+        private void EmptyAbsenceSelection()
+        {
+            dateTimePickerStart.Value = DateTime.Today;
+            dateTimePickerEnd.Value = DateTime.Now.Date;
+            comboBoxReason.SelectedIndex = 0;
+        }
+
+        private void ResetOriginalColor()
+        {
+            foreach (Object sender in senderList)
+            {
+                Button button = (Button)sender;
+                button.BackColor = Color.Aquamarine;
+            }
+        }
+
+        private void BtnAddAbsence_Click(object sender, EventArgs e)
+        {
+            BtnAddAbsence.BackColor = Color.Green;
+            senderList.Add(sender);
+            myOptionSelected = sender;
+            LockDataGridViewAndAllowModifications();
+            dateTimePickerStart.Focus();
+        }
+
+        private void BtnModifyAbsence_Click(object sender, EventArgs e)
+        {
+            senderList.Add(sender);
+            if(dataGridViewAbsence.SelectedRows.Count == 1)
+            {
+                BtnModifyAbsence.BackColor = Color.Green;
+                LockDataGridViewAndAllowModifications();
+                SetAbsenceData();
+                myOptionSelected = sender;
+                dateTimePickerStart.Focus();
+            }
+            else if(dataGridViewAbsence.SelectedRows.Count > 1)
+            {
+                BtnModifyAbsence.BackColor = Color.Orange;
+                MessageBox.Show("Only one absence should be selected.", "Information");
+                BtnModifyAbsence.BackColor = Color.Aquamarine;
+            }
+        }
+
         private void BtnRemoveAbsence_Click(object sender, EventArgs e)
         {
+            senderList.Add(sender);
             if (dataGridViewAbsence.SelectedRows.Count == 1)
             {
                 Absence absence = dataGridViewAbsence.SelectedRows[0].DataBoundItem as Absence;
-                if (MessageBox.Show("Do you really want to delete the line " + _employee.FamilyName + " " + _employee.FirstName + " ?", "Confirmation before removing the line", MessageBoxButtons.YesNo) == DialogResult.Yes) { }
+                if (MessageBox.Show("Do you really want to delete the line " + _employee.FamilyName + " " + _employee.FirstName + " ?", "Confirmation before removing the line", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     _controlMyApp.RemoveAbsenceFromEmployee(absence, _employee);
                     FillAbsenceList(_employee);
+                    ResetOriginalColor();
                 }
             }
-            else
+            else if(dataGridViewAbsence.SelectedRows.Count > 1) 
             {
-                MessageBox.Show("A lign should be selected.", "Information");
+                BtnRemoveAbsence.BackColor = Color.Orange;
+                MessageBox.Show("Only one absence should be selected.", "Information");
+                BtnRemoveAbsence.BackColor = Color.Aquamarine;
             }
         }
 
         private void BtnSaveAbsence_Click(object sender, EventArgs e)
         {
+            senderList.Add(sender);
             if (FirstDayPredateLastDate(dateTimePickerStart.Value, dateTimePickerEnd.Value))
             {
-                Button btn = (Button)mySender;
+                Button btn = (Button)myOptionSelected;
                 switch (btn.Text)
                 {
                     case "Add":
                         if (FirstDayWasNeverPicked(dateTimePickerStart.Value))
                         {
-                            Console.WriteLine(comboBoxReason.SelectedIndex);
                             AddAbsence(_employee,
                                        dateTimePickerStart.Value,
                                        dateTimePickerEnd.Value,
@@ -174,49 +253,19 @@ namespace Mediatek86.View
             {
                 MessageBox.Show("The second date should end after the first date", "Information");
             }
+            ResetOriginalColor();
         }
 
-        public void ResetAbsenceSelection()
+        private void BtnCancelAbsence_Click(object sender, EventArgs e)
         {
-            dateTimePickerStart.Value = DateTime.Now;
-            dateTimePickerEnd.Value = DateTime.Now;
-            comboBoxReason.SelectedIndex = 0;
-        }
-
-        private void UpdateDataGridViewAbsences()
-        {
-            List<Absence> theNewAbsences = _controlMyApp.GetTheAbsences(_employee);
-            bindingSourceAbsences.DataSource = theNewAbsences;
-            dataGridViewAbsence.DataSource = bindingSourceAbsences;
-        }
-
-        private bool FirstDayPredateLastDate(DateTime firstDay, DateTime lastDay)
-        {
-            return _controlMyApp.FirstDayPredateLastDate(firstDay, lastDay);
-        }
-
-        private bool FirstDayWasNeverPicked(DateTime firstDay)
-        {
-            return _controlMyApp.FirstDayWasNeverPicked(firstDay, dataGridViewAbsence);
-        }
-
-
-        private void AddAbsence(Employee employee,
-                           DateTime firstDay,
-                           DateTime lastDay,
-                           int idReason
-                           )
-        {
-            _controlMyApp.AddAbsence(employee, firstDay, lastDay, idReason);
-        }
-
-        public void UpdateAbsence(Employee employee,
-                           DateTime firstDay,
-                           DateTime lastDay,
-                           int idReason
-                           )
-        {
-            _controlMyApp.UpdateAbsence(employee, firstDay, lastDay, idReason);
+            senderList.Add(sender);
+            BtnCancelAbsence.BackColor = Color.Green;
+            if (MessageBox.Show("Do you really want to cancel ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                EmptyAbsenceSelection();
+                UnlockDataGridViewAndBlockModifications();
+                ResetOriginalColor();
+            }
         }
     }
 }

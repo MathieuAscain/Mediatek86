@@ -40,7 +40,7 @@ namespace Mediatek86.View
             // 
             this.lblLogin.AutoSize = true;
             this.lblLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLogin.Location = new System.Drawing.Point(100, 37);
+            this.lblLogin.Location = new System.Drawing.Point(85, 41);
             this.lblLogin.Name = "lblLogin";
             this.lblLogin.Size = new System.Drawing.Size(57, 24);
             this.lblLogin.TabIndex = 0;
@@ -50,7 +50,7 @@ namespace Mediatek86.View
             // 
             this.lblPassword.AutoSize = true;
             this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPassword.Location = new System.Drawing.Point(65, 92);
+            this.lblPassword.Location = new System.Drawing.Point(50, 91);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(92, 24);
             this.lblPassword.TabIndex = 1;
@@ -87,6 +87,7 @@ namespace Mediatek86.View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GrayText;
             this.ClientSize = new System.Drawing.Size(465, 188);
             this.Controls.Add(this.BtnConnexion);
             this.Controls.Add(this.textBoxPassword);
