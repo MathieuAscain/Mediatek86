@@ -160,9 +160,19 @@ namespace Mediatek86.Control
         }
         
 
-        public void UpdateAbsence(Employee employee, DateTime firstDay, DateTime lastDay, int idReason)
+        public void UpdateAbsence(Employee employee, 
+                                  DateTime previousDateSelected,
+                                  DateTime firstDay, 
+                                  DateTime lastDay, 
+                                  int idReason
+                                  )
         {
-
+            AccessDataBase.UpdateAbsence(employee, 
+                                         previousDateSelected, 
+                                         firstDay, 
+                                         lastDay, 
+                                         idReason
+                                        );
         }
 
         public void RemoveAbsenceFromEmployee(Absence absence, Employee _employee)
