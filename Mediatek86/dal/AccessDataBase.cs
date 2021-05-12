@@ -62,7 +62,6 @@ namespace Mediatek86.dal
             ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
             cursor.ReqSelect(req, null);
             int max = 0;
-            Console.WriteLine("Max id = ", max);
             if (cursor.Read())
             {
                 max = (int)cursor.Field("max(idpersonnel)");
@@ -153,7 +152,6 @@ namespace Mediatek86.dal
             req += "from absence a join motif m using (idmotif) ";
             req += "where a.idpersonnel = @idpersonnel ";
             req += "order by datedebut DESC";
-            Console.WriteLine(employee.IdEmployee);
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
                 {"@idpersonnel", employee.IdEmployee}
@@ -206,6 +204,28 @@ namespace Mediatek86.dal
             cursor.ReqUpdate(req, parameters);
         }
 
+        public static void UpdateAbsence(Employee employee,
+                                         DateTime previousDateSelected,
+                                         DateTime firstDay, 
+                                         DateTime lastDay, 
+                                         int idReason
+                                         )
+        {
+            string req = "update absence set datedebut = @datedebut, datefin = @datefin, idmotif = @idmotif ";
+            req += "where idpersonnel = @idpersonnel and datedebut = @datedebutAvantMAJ;";
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "@idpersonnel", employee.IdEmployee },
+                { "@datedebut", firstDay },
+                { "@datedebutAvantMAJ", previousDateSelected },
+                { "@datefin", lastDay },
+                { "@idmotif", idReason }
+            };
+
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqUpdate(req, parameters);
+        }
+
         public static void RemoveAbsenceFromEmployee(Absence absence, Employee employee)
         {
             string req = "delete from absence ";
@@ -219,6 +239,7 @@ namespace Mediatek86.dal
             ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
             cursor.ReqUpdate(req, parameters);
         }
+
     }
 }
 

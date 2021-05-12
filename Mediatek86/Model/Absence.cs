@@ -19,18 +19,47 @@ namespace Mediatek86.Model
 
         public string Justification { get; }
 
-        public Absence(Employee employee, 
-                       DateTime firstDay, 
-                       DateTime lastDay, 
+        public DateTime Hour { get; set; }
+
+        public DateTime Minute { get; set; }
+
+        public DateTime Second { get; set; }
+
+        public Absence(Employee employee,
+                       DateTime firstDay,
+                       DateTime lastDay,
                        int idReason,
-                       string justification)
+                       string justification
+                       )
                        
         {
             Employee = employee;
             FirstDay = firstDay;
             LastDay = lastDay;
             IdReason = idReason;
-            Justification = justification; 
+            Justification = justification;
         }
+
+        public Absence(Employee employee,
+               DateTime firstDay,
+               DateTime lastDay,
+               int idReason,
+               string justification,
+               DateTime hour,
+               DateTime minute,
+               DateTime second
+               )
+
+        {
+            Employee = employee;
+            FirstDay = firstDay;
+            LastDay = lastDay;
+            IdReason = idReason;
+            Justification = justification;
+            Hour = hour;
+            Minute = minute;
+            Second = second;
+        }
+
     }
 }

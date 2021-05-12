@@ -19,6 +19,7 @@ namespace Mediatek86.View
         private readonly BindingSource bindingSourceAbsences = new BindingSource();
         private object myOptionSelected;
         private readonly ArrayList senderList = new ArrayList();
+        private DateTime previousDaySelected;
 
         /// <summary>
         /// 
@@ -34,15 +35,29 @@ namespace Mediatek86.View
 
         public void Init(Employee employee)
         {
+            SetUpButtonColours();
+            SetUpDateTimePickerFormat();
+            UnlockDataGridViewAndBlockModifications();
+            FillAbsenceList(employee);
+            FillComboBoxReason();
+            AddNameToLabel(employee);
+        }
+
+        public void SetUpButtonColours()
+        {
             BtnAddAbsence.BackColor = Color.Aquamarine;
             BtnModifyAbsence.BackColor = Color.Aquamarine;
             BtnRemoveAbsence.BackColor = Color.Aquamarine;
             BtnSaveAbsence.BackColor = Color.Aquamarine;
             BtnCancelAbsence.BackColor = Color.Aquamarine;
-            UnlockDataGridViewAndBlockModifications();
-            FillAbsenceList(employee);
-            FillComboBoxReason();
-            AddNameToLabel(employee);
+        }
+
+        public void SetUpDateTimePickerFormat()
+        {
+            dateTimePickerStart.Format = DateTimePickerFormat.Custom;
+            dateTimePickerStart.CustomFormat = "dd/MM/yyyy HH:mm";
+            dateTimePickerEnd.Format = DateTimePickerFormat.Custom;
+            dateTimePickerEnd.CustomFormat = "dd/MM/yyyy HH:mm";
         }
 
         public void FillAbsenceList(Employee employee)
@@ -58,6 +73,9 @@ namespace Mediatek86.View
                 dataGridViewAbsence.Columns["FirstDay"].HeaderText = "First day";
                 dataGridViewAbsence.Columns["LastDay"].HeaderText = "Last day";
                 dataGridViewAbsence.Columns["IdReason"].Visible = false;
+                dataGridViewAbsence.Columns["Hour"].Visible = false;
+                dataGridViewAbsence.Columns["Minute"].Visible = false;
+                dataGridViewAbsence.Columns["Second"].Visible = false;
                 dataGridViewAbsence.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             }
             catch(Exception e)
@@ -118,6 +136,7 @@ namespace Mediatek86.View
             return _controlMyApp.FirstDayWasNeverPicked(firstDay, dataGridViewAbsence);
         }
 
+
         private void AddAbsence(Employee employee,
                            DateTime firstDay,
                            DateTime lastDay,
@@ -128,12 +147,19 @@ namespace Mediatek86.View
         }
 
         public void UpdateAbsence(Employee employee,
-                           DateTime firstDay,
-                           DateTime lastDay,
-                           int idReason
+                                  DateTime previousDaySelected,
+                                  DateTime firstDay,
+                                  DateTime lastDay,
+                                  int idReason
+                                  
                            )
         {
-            _controlMyApp.UpdateAbsence(employee, firstDay, lastDay, idReason);
+            _controlMyApp.UpdateAbsence(employee, 
+                                        previousDaySelected, 
+                                        firstDay, 
+                                        lastDay, 
+                                        idReason
+                                        );
         }
 
         private void SetAbsenceData()
@@ -141,17 +167,25 @@ namespace Mediatek86.View
             Absence absence = (Absence)dataGridViewAbsence.CurrentRow.DataBoundItem;
             dateTimePickerStart.Value = new DateTime(absence.FirstDay.Year,
                                                      absence.FirstDay.Month,
-                                                     absence.FirstDay.Day);
+                                                     absence.FirstDay.Day,
+                                                     absence.FirstDay.Hour,
+                                                     absence.FirstDay.Minute,
+                                                     0
+                                                    );
             dateTimePickerEnd.Value = new DateTime(absence.LastDay.Year,
-                                                     absence.LastDay.Month,
-                                                     absence.LastDay.Day);
+                                                   absence.LastDay.Month,
+                                                   absence.LastDay.Day,
+                                                   absence.LastDay.Hour,
+                                                   absence.LastDay.Minute,
+                                                   0
+                                                   );
             comboBoxReason.SelectedIndex = absence.IdReason - 1;
         }
 
         private void EmptyAbsenceSelection()
         {
             dateTimePickerStart.Value = DateTime.Today;
-            dateTimePickerEnd.Value = DateTime.Now.Date;
+            dateTimePickerEnd.Value = DateTime.Today;
             comboBoxReason.SelectedIndex = 0;
         }
 
@@ -182,6 +216,7 @@ namespace Mediatek86.View
                 LockDataGridViewAndAllowModifications();
                 SetAbsenceData();
                 myOptionSelected = sender;
+                previousDaySelected = (DateTime)dateTimePickerStart.Value;
                 dateTimePickerStart.Focus();
             }
             else if(dataGridViewAbsence.SelectedRows.Count > 1)
@@ -222,12 +257,24 @@ namespace Mediatek86.View
                 switch (btn.Text)
                 {
                     case "Add":
-                        if (FirstDayWasNeverPicked(dateTimePickerStart.Value))
+                        DateTime dateToBeConfirmed = new DateTime(
+                                                          dateTimePickerStart.Value.Year,
+                                                          dateTimePickerStart.Value.Month,
+                                                          dateTimePickerStart.Value.Day,
+                                                          dateTimePickerStart.Value.Hour,
+                                                          dateTimePickerStart.Value.Minute,
+                                                          0
+                                                          );               
+
+
+                        if (FirstDayWasNeverPicked(dateToBeConfirmed))
                         {
-                            AddAbsence(_employee,
+                                AddAbsence(_employee,
                                        dateTimePickerStart.Value,
                                        dateTimePickerEnd.Value,
-                                       comboBoxReason.SelectedIndex + 1);
+                                       comboBoxReason.SelectedIndex + 1
+                                      );
+                          
                         }
                         else
                         {
@@ -235,11 +282,14 @@ namespace Mediatek86.View
                         }
                         break;
                     case "Modify":
-                        Console.WriteLine("combo box " + (comboBoxReason.SelectedIndex + 1));
+                        DateTime firstDay = (DateTime)dateTimePickerStart.Value;
+                        DateTime lastDay = (DateTime)dateTimePickerEnd.Value;
                         UpdateAbsence(_employee,
-                                       dateTimePickerStart.Value,
-                                       dateTimePickerEnd.Value,
+                                       previousDaySelected,
+                                       firstDay,
+                                       lastDay,
                                        comboBoxReason.SelectedIndex + 1);
+
                         break;
                     default:
                         break;
