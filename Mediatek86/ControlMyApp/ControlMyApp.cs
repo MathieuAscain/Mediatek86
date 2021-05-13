@@ -180,5 +180,30 @@ namespace Mediatek86.Control
             AccessDataBase.RemoveAbsenceFromEmployee(absence, _employee);
         }
 
+
+        public bool AbsenceAtTheEndOfTheCalendar(Employee employee, DateTime firstDay)
+        {
+            DateTime maxDay = AccessDataBase.AbsenceAtTheEndOfTheCalendar(employee);
+            return firstDay > maxDay;
+
+        }
+
+        public bool LastDayIsBeforeNextAbsence(Employee employee, 
+                                                                DateTime firstDaySelected, 
+                                                                DateTime lastDaySelected)
+        {
+            DateTime firstDayNextAbsence = AccessDataBase.LastDayIsBeforeNextAbsence(employee, firstDaySelected);
+
+            return lastDaySelected < firstDayNextAbsence;
+        }
+
+        public bool FirstDayIsAfterPreviousAbsence(Employee employee, 
+                                                   DateTime firstDaySelected
+                                                   )
+        {
+            DateTime lastDayPreviousAbsence = AccessDataBase.FirstDayIsAfterPreviousAbsence(employee, firstDaySelected);
+
+            return lastDayPreviousAbsence < firstDaySelected;
+        }
     }
 }

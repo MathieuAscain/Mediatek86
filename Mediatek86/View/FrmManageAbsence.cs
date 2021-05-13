@@ -137,6 +137,24 @@ namespace Mediatek86.View
         }
 
 
+        private bool LastDayIsBeforeNextAbsence(DateTime firstDaySelected, DateTime lastDaySelected)
+        {
+            return _controlMyApp.LastDayIsBeforeNextAbsence(_employee, firstDaySelected, lastDaySelected);
+            
+        }
+
+
+        private bool FirstDayIsAfterPreviousAbsence(DateTime firstDaySelected)
+        {
+
+            return _controlMyApp.FirstDayIsAfterPreviousAbsence(_employee, firstDaySelected);
+        }
+
+        private bool AbsenceAtTheEndOfTheCalendar(DateTime firstDay)
+        {
+            return _controlMyApp.AbsenceAtTheEndOfTheCalendar(_employee, firstDay);
+        }
+
         private void AddAbsence(Employee employee,
                            DateTime firstDay,
                            DateTime lastDay,
@@ -216,7 +234,14 @@ namespace Mediatek86.View
                 LockDataGridViewAndAllowModifications();
                 SetAbsenceData();
                 myOptionSelected = sender;
-                previousDaySelected = (DateTime)dateTimePickerStart.Value;
+
+                previousDaySelected = new DateTime(dateTimePickerStart.Value.Year,
+                                                   dateTimePickerStart.Value.Month,
+                                                   dateTimePickerStart.Value.Day,
+                                                   dateTimePickerStart.Value.Hour,
+                                                   dateTimePickerStart.Value.Minute,
+                                                   0);
+
                 dateTimePickerStart.Focus();
             }
             else if(dataGridViewAbsence.SelectedRows.Count > 1)
@@ -233,7 +258,7 @@ namespace Mediatek86.View
             if (dataGridViewAbsence.SelectedRows.Count == 1)
             {
                 Absence absence = dataGridViewAbsence.SelectedRows[0].DataBoundItem as Absence;
-                if (MessageBox.Show("Do you really want to delete the line " + _employee.FamilyName + " " + _employee.FirstName + " ?", "Confirmation before removing the line", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Do you really want to delete the absence ?", "Confirmation before removing the line", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     _controlMyApp.RemoveAbsenceFromEmployee(absence, _employee);
                     FillAbsenceList(_employee);
@@ -269,12 +294,36 @@ namespace Mediatek86.View
 
                         if (FirstDayWasNeverPicked(dateToBeConfirmed))
                         {
+
+                            DateTime recreateFirstDay = new DateTime(dateTimePickerStart.Value.Year,
+                                                             dateTimePickerStart.Value.Month,
+                                                             dateTimePickerStart.Value.Day,
+                                                             dateTimePickerStart.Value.Hour,
+                                                             dateTimePickerStart.Value.Minute,
+                                                             0);
+
+                            DateTime recreateLastDay = new DateTime(dateTimePickerEnd.Value.Year,
+                                                                    dateTimePickerEnd.Value.Month,
+                                                                    dateTimePickerEnd.Value.Day,
+                                                                    dateTimePickerEnd.Value.Hour,
+                                                                    dateTimePickerEnd.Value.Minute,
+                                                                    0);
+
+
+                            if (AbsenceAtTheEndOfTheCalendar(recreateFirstDay) ||
+                                LastDayIsBeforeNextAbsence(recreateFirstDay, recreateLastDay) &&
+                                FirstDayIsAfterPreviousAbsence(recreateFirstDay))
+                            {
                                 AddAbsence(_employee,
-                                       dateTimePickerStart.Value,
-                                       dateTimePickerEnd.Value,
-                                       comboBoxReason.SelectedIndex + 1
-                                      );
-                          
+                                      recreateFirstDay,
+                                      recreateLastDay,
+                                      comboBoxReason.SelectedIndex + 1
+                                     );
+                            }
+                            else
+                            {
+                                MessageBox.Show("There is already an absence during this time", "Information");
+                            }
                         }
                         else
                         {
@@ -282,12 +331,25 @@ namespace Mediatek86.View
                         }
                         break;
                     case "Modify":
-                        DateTime firstDay = (DateTime)dateTimePickerStart.Value;
-                        DateTime lastDay = (DateTime)dateTimePickerEnd.Value;
+
+                        DateTime modifyFirstDay = new DateTime(dateTimePickerStart.Value.Year,
+                                                             dateTimePickerStart.Value.Month,
+                                                             dateTimePickerStart.Value.Day,
+                                                             dateTimePickerStart.Value.Hour,
+                                                             dateTimePickerStart.Value.Minute,
+                                                             0);
+
+                        DateTime modifyLastDay = new DateTime(dateTimePickerEnd.Value.Year,
+                                                                    dateTimePickerEnd.Value.Month,
+                                                                    dateTimePickerEnd.Value.Day,
+                                                                    dateTimePickerEnd.Value.Hour,
+                                                                    dateTimePickerEnd.Value.Minute,
+                                                                    0);
+
                         UpdateAbsence(_employee,
                                        previousDaySelected,
-                                       firstDay,
-                                       lastDay,
+                                       modifyFirstDay,
+                                       modifyLastDay,
                                        comboBoxReason.SelectedIndex + 1);
 
                         break;
