@@ -240,6 +240,88 @@ namespace Mediatek86.dal
             cursor.ReqUpdate(req, parameters);
         }
 
+        public static DateTime AbsenceAtTheEndOfTheCalendar(Employee employee)
+        {
+            DateTime max = new DateTime();
+            string req = "SELECT MAX(datefin) ";
+            req += "FROM absence ";
+            req += "WHERE idpersonnel = @idpersonnel";
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                {"@idpersonnel", employee.IdEmployee},
+            };
+
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqSelect(req, parameters);
+            while (cursor.Read())
+            {
+                max = (DateTime)cursor.Field("max(datefin)");
+
+            }
+            cursor.Close();
+            return max;
+
+        }
+
+        public static DateTime LastDayIsBeforeNextAbsence(Employee employee, DateTime firstDay)
+        {
+            DateTime firstDayNextAbsence = new DateTime();
+            string req = "SELECT MIN(datedebut) ";
+            req += "FROM absence ";
+            req += "WHERE idpersonnel = @idpersonnel ";
+            req += "AND datedebut > @firstDayPicked";
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                {"@idpersonnel", employee.IdEmployee},
+                {"@firstDayPicked", firstDay}
+            };
+
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqSelect(req, parameters);
+            while (cursor.Read())
+            {
+                firstDayNextAbsence = (DateTime)cursor.Field("min(datedebut)");
+
+            }
+            cursor.Close();
+            return firstDayNextAbsence;
+        }
+
+        public static DateTime FirstDayIsAfterPreviousAbsence(Employee employee,
+                                                                    DateTime firstDay
+                                                                   )
+        {
+            DateTime lastDayPreviousAbsence = new DateTime();
+            string req = "SELECT MAX(datefin) ";
+            req += "FROM absence ";
+            req += "WHERE idpersonnel = @idpersonnel ";
+            req += "AND datefin < ( ";
+            req += "SELECT MIN(datedebut) ";
+            req += "FROM absence ";
+            req += "WHERE idpersonnel = @idpersonnel ";
+            req += "AND datedebut > @firstDayPicked)";
+
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                {"@idpersonnel", employee.IdEmployee},
+                {"@firstDayPicked", firstDay}
+            };
+
+            ConnexionDataBase cursor = ConnexionDataBase.GetInstance(connexionString);
+            cursor.ReqSelect(req, parameters);
+            while (cursor.Read())
+            {
+                lastDayPreviousAbsence = (DateTime)cursor.Field("max(datefin)");
+
+            }
+            cursor.Close();
+            return lastDayPreviousAbsence;
+
+        }
+
     }
 }
 
