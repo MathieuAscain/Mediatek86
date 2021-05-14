@@ -15,7 +15,7 @@ Its goal is to manage each multimedia library employee by assigning them to a de
 *Password for the connexion : mathieu*
 
 Here some pictures to have an idea of the application.
-The first form to connect the application to the database and check user identity
+The first form to connect the application to the database and check user identity <br/>
 ![AuthentificationForm](https://user-images.githubusercontent.com/67832354/118289121-4e529200-b4d5-11eb-9cb4-1bdea35ac216.png)
 
 In case a wrong user name or password is used <br/>
