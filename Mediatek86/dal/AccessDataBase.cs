@@ -3,12 +3,24 @@ using Mediatek86.Model;
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// AcccessDataBase class for the SQL requests
+/// </summary>
 namespace Mediatek86.dal
 {
-    public class AccessDataBase
+    /// <summary>
+    /// Class which defines the SQL request to interrogate the database
+    /// </summary>
+    public static class AccessDataBase
     {
         private static readonly string connexionString = "server=localhost;user id=gestionpersonnel;password=mathieu;database=gestionpersonnel;SslMode=none";
 
+        /// <summary>
+        /// Method to control the authentification
+        /// </summary>
+        /// <param name="login">login of the connexion</param>
+        /// <param name="password">password of the connexion</param>
+        /// <returns>true if the connexion is open, false otherwise</returns>
         public static Boolean ControlAuthentification(string login, string password)
         {
             string req = "select * from responsable ";
@@ -32,6 +44,10 @@ namespace Mediatek86.dal
             }
         }
 
+        /// <summary>
+        /// Get the list of all employees
+        /// </summary>
+        /// <returns>List of employees in the database</returns>
         public static List<Employee> GetTheEmployees()
         {
             List<Employee> theEmployee = new List<Employee>();
@@ -56,6 +72,10 @@ namespace Mediatek86.dal
             return theEmployee;
         }
 
+        /// <summary>
+        /// Get the maximum employee ID from the employee in the database
+        /// </summary>
+        /// <returns>integer (maximum ID of the employee) in the table EMPLOYEE</returns>
         public static int GetMaxEmployeeID()
         {
             string req = "select max(idpersonnel) from personnel";
@@ -70,6 +90,10 @@ namespace Mediatek86.dal
             return max;
         }
 
+        /// <summary>
+        /// Add an employee to the database
+        /// </summary>
+        /// <param name="employee">Employee (object) from the data selected by user</param>
         public static void AddEmployee(Employee employee)
         {
             string req = "insert into personnel(idpersonnel, idservice, nom, prenom, tel, mail) ";
@@ -89,6 +113,10 @@ namespace Mediatek86.dal
             cursor.ReqUpdate(req, parameters);
         }
 
+        /// <summary>
+        /// Update employee data in the database
+        /// </summary>
+        /// <param name="employee">Employee (object) from the data selected by user</param>
         public static void UpdateEmployee(Employee employee)
         {
             string req = "update personnel set nom = @nom, prenom = @prenom, tel = @tel, mail = @mail, idservice = @idservice ";
@@ -106,7 +134,11 @@ namespace Mediatek86.dal
             cursor.ReqUpdate(req, parameters);
         }
 
-     
+
+        /// <summary>
+        /// Remove employee absence from the table ABSENCE
+        /// </summary>
+        /// <param name="employee">Employee (object) from the data selected by user</param>
         public static void RemoveEmployeeFromAbsence(Employee employee)
         {
             string req = "delete from absence where idpersonnel = @idpersonnelAbsence ";
@@ -118,6 +150,10 @@ namespace Mediatek86.dal
             cursor.ReqUpdate(req, parameters);
         }
 
+        /// <summary>
+        /// Remove employee from the table EMPLOYEE
+        /// </summary>
+        /// <param name="employee">Employee (object) from the data selected by user</param>
         public static void RemoveEmployeeFromEmployee(Employee employee)
         {
             string req = "delete from personnel where idpersonnel = @idpersonnelPersonnel;";
@@ -129,6 +165,10 @@ namespace Mediatek86.dal
             cursor.ReqUpdate(req, parameters);
         }
 
+        /// <summary>
+        /// Get the list of departments stored in the database
+        /// </summary>
+        /// <returns>List of departments</returns>
         public static List<Department> GetTheDepartments()
         {
             List<Department> theDepartments = new List<Department>();
@@ -145,6 +185,11 @@ namespace Mediatek86.dal
             return theDepartments;
         }
 
+        /// <summary>
+        /// Get the list of absences stored in the database
+        /// </summary>
+        /// <param name="employee">Employee (object) from the data selected by user</param>
+        /// <returns>List of absences from an employee</returns>
         public static List<Absence> GetTheAbsences(Employee employee)
         {
             List<Absence> theAbsences = new List<Absence>();
@@ -172,6 +217,10 @@ namespace Mediatek86.dal
             return theAbsences;
         }
 
+        /// <summary>
+        /// Get the list of absence reasons stored in the database
+        /// </summary>
+        /// <returns>List of absence reasons</returns>
         public static List<Reason> GetTheReasons()
         {
             List<Reason> theReasons = new List<Reason>();
@@ -188,6 +237,13 @@ namespace Mediatek86.dal
             return theReasons;
         }
 
+        /// <summary>
+        /// Add an absence to an employee
+        /// </summary>
+        /// <param name="employee">Employee (object) from the data selected by user</param>
+        /// <param name="firstDay">first day of the absence</param>
+        /// <param name="lastDay">last day of the absence</param>
+        /// <param name="idReason">ID reason of the absence</param>
         public static void AddAbsence(Employee employee, DateTime firstDay, DateTime lastDay, int idReason)
         {
             string req = "insert into absence(idpersonnel, datedebut, idmotif, datefin) ";
@@ -204,6 +260,14 @@ namespace Mediatek86.dal
             cursor.ReqUpdate(req, parameters);
         }
 
+        /// <summary>
+        /// Update absence from an employee
+        /// </summary>
+        /// <param name="employee">Employee (object) from the data selected by user</param>
+        /// <param name="previousDateSelected">first day, part of the composite primary key absence</param>
+        /// <param name="firstDay">first day selected</param>
+        /// <param name="lastDay">last day selected</param>
+        /// <param name="idReason">ID reason of the absence</param>
         public static void UpdateAbsence(Employee employee,
                                          DateTime previousDateSelected,
                                          DateTime firstDay, 
@@ -226,6 +290,11 @@ namespace Mediatek86.dal
             cursor.ReqUpdate(req, parameters);
         }
 
+        /// <summary>
+        /// Remove an absence from an employee
+        /// </summary>
+        /// <param name="absence">Absence (object) selected from an employee</param>
+        /// <param name="employee">Employee (object) selected by a user</param>
         public static void RemoveAbsenceFromEmployee(Absence absence, Employee employee)
         {
             string req = "delete from absence ";
@@ -240,6 +309,11 @@ namespace Mediatek86.dal
             cursor.ReqUpdate(req, parameters);
         }
 
+        /// <summary>
+        /// Get the last day corresponding to an absence
+        /// </summary>
+        /// <param name="employee">Employee (object) from the data selected by user</param>
+        /// <returns>Last day corresponding to an absence</returns>
         public static DateTime AbsenceAtTheEndOfTheCalendar(Employee employee)
         {
             DateTime max = new DateTime();
@@ -264,6 +338,12 @@ namespace Mediatek86.dal
 
         }
 
+        /// <summary>
+        /// Get the first day of the next absence - timeslot in between absences
+        /// </summary>
+        /// <param name="employee">Employee (object) from the data selected by user</param>
+        /// <param name="firstDay">first day selected by user</param>
+        /// <returns>first day of the next absence</returns>
         public static DateTime LastDayIsBeforeNextAbsence(Employee employee, DateTime firstDay)
         {
             DateTime firstDayNextAbsence = new DateTime();
@@ -289,9 +369,15 @@ namespace Mediatek86.dal
             return firstDayNextAbsence;
         }
 
+        /// <summary>
+        /// Get the last day of the previous absence - timeslot in between absences
+        /// </summary>
+        /// <param name="employee">Employee (object) from the data selected by user</param>
+        /// <param name="firstDay">first day selected by user</param>
+        /// <returns>last day of the previous absence</returns>
         public static DateTime FirstDayIsAfterPreviousAbsence(Employee employee,
-                                                                    DateTime firstDay
-                                                                   )
+                                                              DateTime firstDay
+                                                              )
         {
             DateTime lastDayPreviousAbsence = new DateTime();
             string req = "SELECT MAX(datefin) ";

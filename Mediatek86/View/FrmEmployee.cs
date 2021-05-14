@@ -3,15 +3,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using Mediatek86.Control;
 using Mediatek86.Model;
 
+/// <summary>
+/// View in the MVC conception for the Employee Form
+/// </summary>
 namespace Mediatek86.View
 {
     /// <summary>
-    /// Form for the 
+    /// Windows Form to manage all employees from the company
     /// </summary>
     public partial class FrmEmployee : Form
     {
@@ -34,10 +36,7 @@ namespace Mediatek86.View
             Init();
         }
 
-        /// <summary>
-        /// Initialization of the Employee frame : fill of the list and the comboBox
-        /// </summary>
-        public void Init()
+        private void Init()
         {
             grpBoxEmployeeData.Enabled = false;
 
@@ -53,10 +52,7 @@ namespace Mediatek86.View
             lblShowButtonClicked.Text = "Blocked/Use left buttons";
         }
 
-        /// <summary>
-        /// Fill the list of employees
-        /// </summary>
-        public void FillEmployeesList()
+        private void FillEmployeesList()
         {
             List<Employee> theEmployees = controlMyApp.GetTheEmployees();
             bindingSourceEmployees.DataSource = theEmployees;
@@ -70,10 +66,7 @@ namespace Mediatek86.View
             dataGridViewEmployee.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public void FillDepartmentsList()
+        private void FillDepartmentsList()
         {
             List<Department> theDepartments = controlMyApp.GetTheDepartments();
             bindingSourceDepartments.DataSource = theDepartments;
@@ -216,12 +209,10 @@ namespace Mediatek86.View
                 MessageBox.Show("Only a line should be selected.", "Information");
             }
             ResetOriginalColor();
-            //BtnRemoveEmployee.BackColor = Color.Aquamarine;
         }
         
         private void BtnSaveEmployee_Click(object sender, EventArgs e)
         {
-            //myFinalSelection = sender;
             senderList.Add(sender);
             if (TextBoxesAreNullOrEmpty())
             {
@@ -255,7 +246,6 @@ namespace Mediatek86.View
 
         private void BtnCancelEmployee_Click(object sender, System.EventArgs e)
         {
-            //myFinalSelection = sender;
             senderList.Add(sender);
             BtnCancelEmployee.BackColor = Color.Green;
             if (MessageBox.Show("Do you really want to cancel ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)

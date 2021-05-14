@@ -1,6 +1,7 @@
 ﻿
-using System;
-
+/// <summary>
+/// Model in the MVC conception for the Department
+/// </summary>
 namespace Mediatek86.Model
 {
     /// <summary>
@@ -8,13 +9,10 @@ namespace Mediatek86.Model
     /// </summary>
     public class Department
     {
-
-        private int _idDepartment;
-
         /// <summary>
-        /// Only a getter as this field is the primary key from the table department
+        /// Getter and setter for the ID department
         /// </summary>
-        public int IdDepartment { get => _idDepartment; set => _idDepartment = value; }
+        public int IdDepartment { get; set; }
 
         /// <summary>
         /// Only a getter as this table is not supposed to be modified
@@ -33,17 +31,12 @@ namespace Mediatek86.Model
         }
 
         /// <summary>
-        /// Définit l'information à afficher (juste le nom)
+        /// Define the information to be displayed (only the name)
         /// </summary>
-        /// <returns>nom du profil</returns>
+        /// <returns>name of the department</returns>
         public override string ToString()
         {
             return DepartmentName;
-        }
-
-        public static implicit operator Department(int v)
-        {
-            throw new NotImplementedException();
         }
     }
 }

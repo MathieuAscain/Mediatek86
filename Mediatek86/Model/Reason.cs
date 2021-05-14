@@ -1,4 +1,7 @@
 ﻿
+/// <summary>
+/// Model in the MVC conception for the Reason
+/// </summary>
 namespace Mediatek86.Model
 {
     /// <summary>
@@ -27,6 +30,10 @@ namespace Mediatek86.Model
             Justification = justification;
         }
 
+        /// <summary>
+        /// Method ToString to display the reason of the absence
+        /// </summary>
+        /// <returns>Reason (justification) of the absence</returns>
         public override string ToString()
         {
             return Justification;
