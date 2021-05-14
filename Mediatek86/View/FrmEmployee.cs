@@ -235,6 +235,7 @@ namespace Mediatek86.View
                     case "Modify":
                         UpdateEmployee();
                         UnlockDataGridViewAndBlockModifications();
+                        FillEmployeesList();
                         EmptyEmployeeSelection();
                         break;
                     default:
