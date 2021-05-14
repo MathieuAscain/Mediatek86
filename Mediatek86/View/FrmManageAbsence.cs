@@ -326,12 +326,17 @@ namespace Mediatek86.View
                             }
                             else
                             {
+                               
+                                BtnSaveAbsence.BackColor = Color.Orange;
                                 MessageBox.Show("There is already an absence during this time", "Information");
+                                BtnSaveAbsence.BackColor = Color.Aquamarine;
                             }
                         }
                         else
                         {
+                            BtnSaveAbsence.BackColor = Color.Orange;
                             MessageBox.Show("There is already an absence at this date", "Information");
+                            BtnSaveAbsence.BackColor = Color.Aquamarine;
                         }
                         break;
                     case "Modify":
@@ -367,7 +372,9 @@ namespace Mediatek86.View
             }
             else
             {
+                BtnSaveAbsence.BackColor = Color.Orange;
                 MessageBox.Show("The second date should end after the first date", "Information");
+                BtnSaveAbsence.BackColor = Color.Aquamarine;
             }
             ResetOriginalColor();
         }
