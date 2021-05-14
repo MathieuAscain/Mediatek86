@@ -314,7 +314,8 @@ namespace Mediatek86.View
                                                                     0);
 
 
-                            if (AbsenceAtTheEndOfTheCalendar(recreateFirstDay) ||
+                            if (dataGridViewAbsence.Rows.Count == 0 ||
+                                AbsenceAtTheEndOfTheCalendar(recreateFirstDay) ||
                                 LastDayIsBeforeNextAbsence(recreateFirstDay, recreateLastDay) &&
                                 FirstDayIsAfterPreviousAbsence(recreateFirstDay))
                             {
