@@ -14,5 +14,21 @@ Its goal is to manage each multimedia library employee by assigning them to a de
 *Login for the connexion : responsable*<br>
 *Password for the connexion : mathieu*
 
+Here some pictures to have an idea of the application.
+The first form to connect the application to the database and check user identity
+![AuthentificationForm](https://user-images.githubusercontent.com/67832354/118289121-4e529200-b4d5-11eb-9cb4-1bdea35ac216.png)
+
+In case a wrong user name or password is used <br/>
+![connexion](https://user-images.githubusercontent.com/67832354/118289394-996ca500-b4d5-11eb-90a1-d6e8715ff543.png)
+
+The form with the user and the password hidden <br/>
+![right-connexion](https://user-images.githubusercontent.com/67832354/118289537-be611800-b4d5-11eb-98e2-8c501b40ace8.png)
+
+The employees form displaying all the employees from the company<br/>
+![EmployeeForm](https://user-images.githubusercontent.com/67832354/118289664-dfc20400-b4d5-11eb-8f8a-a367d798b77f.png)
+
+The absence form which belongs to a specific employee <br/>
+![AbsenceForm](https://user-images.githubusercontent.com/67832354/118289824-041de080-b4d6-11eb-96d1-2ae46b09e39d.png)
+
 
 
