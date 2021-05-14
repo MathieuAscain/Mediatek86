@@ -6,10 +6,13 @@ using System.Windows.Forms;
 using Mediatek86.Control;
 using Mediatek86.Model;
 
+/// <summary>
+/// View in the MVC conception for the Absence Form
+/// </summary>
 namespace Mediatek86.View
 {
     /// <summary>
-    /// 
+    /// Windows Form to manage an absence from a specific employee
     /// </summary>
     public partial class FrmManageAbsence : Form
     {
@@ -21,10 +24,12 @@ namespace Mediatek86.View
         private readonly ArrayList senderList = new ArrayList();
         private DateTime previousDaySelected;
 
+
         /// <summary>
-        /// 
+        /// Unique constructor to generate the absence WinForm
         /// </summary>
-        /// <param name="controlMyApp"></param>
+        /// <param name="controlMyApp">instance of the controller class</param>
+        /// <param name="employee">instance of the corresponding employee</param>
         public FrmManageAbsence(ControlMyApp controlMyApp, Employee employee)
         {
             InitializeComponent();
@@ -33,7 +38,7 @@ namespace Mediatek86.View
             _employee = employee;
         }
 
-        public void Init(Employee employee)
+        private void Init(Employee employee)
         {
             SetUpButtonColours();
             SetUpDateTimePickerFormat();
@@ -43,7 +48,7 @@ namespace Mediatek86.View
             AddNameToLabel(employee);
         }
 
-        public void SetUpButtonColours()
+        private void SetUpButtonColours()
         {
             BtnAddAbsence.BackColor = Color.Aquamarine;
             BtnModifyAbsence.BackColor = Color.Aquamarine;
@@ -52,7 +57,7 @@ namespace Mediatek86.View
             BtnCancelAbsence.BackColor = Color.Aquamarine;
         }
 
-        public void SetUpDateTimePickerFormat()
+        private void SetUpDateTimePickerFormat()
         {
             dateTimePickerStart.Format = DateTimePickerFormat.Custom;
             dateTimePickerStart.CustomFormat = "dd/MM/yyyy HH:mm";
@@ -60,7 +65,7 @@ namespace Mediatek86.View
             dateTimePickerEnd.CustomFormat = "dd/MM/yyyy HH:mm";
         }
 
-        public void FillAbsenceList(Employee employee)
+        private void FillAbsenceList(Employee employee)
         {
             try
             {
@@ -84,7 +89,7 @@ namespace Mediatek86.View
             }
         }
 
-        public void FillComboBoxReason()
+        private void FillComboBoxReason()
         {
             List<Reason> theReasons = _controlMyApp.GetTheReasons();
             bindingSourceReasons.DataSource = theReasons;
@@ -107,12 +112,12 @@ namespace Mediatek86.View
             grpBoxAbsenceData.Enabled = false;
         }
 
-        public void AddNameToLabel(Employee employee)
+        private void AddNameToLabel(Employee employee)
         {
             lblPersonConcerned.Text = employee.FamilyName + " " + employee.FirstName;
         }
 
-        public void ResetAbsenceSelection()
+        private void ResetAbsenceSelection()
         {
             dateTimePickerStart.Value = DateTime.Now;
             dateTimePickerEnd.Value = DateTime.Now;
@@ -164,13 +169,12 @@ namespace Mediatek86.View
             _controlMyApp.AddAbsence(employee, firstDay, lastDay, idReason);
         }
 
-        public void UpdateAbsence(Employee employee,
+        private void UpdateAbsence(Employee employee,
                                   DateTime previousDaySelected,
                                   DateTime firstDay,
                                   DateTime lastDay,
                                   int idReason
-                                  
-                           )
+                                 )
         {
             _controlMyApp.UpdateAbsence(employee, 
                                         previousDaySelected, 

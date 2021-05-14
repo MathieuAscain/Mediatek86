@@ -3,6 +3,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using Mediatek86.Control;
 
+/// <summary>
+/// View in the MVC conception for the Authentification Form
+/// </summary>
 namespace Mediatek86.View
 {
     /// <summary>
@@ -27,12 +30,6 @@ namespace Mediatek86.View
 
         }
 
-        /// <summary>
-        /// Check if the input given by the user fit with the login and password saved in the database
-        /// Clear the textBoxes in case the inputs do not correspond
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void BtnConnexion_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(textBoxLogin.Text) || String.IsNullOrEmpty(textBoxPassword.Text))

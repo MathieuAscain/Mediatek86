@@ -1,7 +1,6 @@
-﻿
-using System.Collections.Generic;
-using Mediatek86.Control;
-
+﻿/// <summary>
+/// Model in the MVC conception for the Employee
+/// </summary>
 namespace Mediatek86.Model
 {
     /// <summary>
@@ -9,13 +8,6 @@ namespace Mediatek86.Model
     /// </summary>
     public class Employee
     {
-
-        private string _familyName;
-        private string _firstName;
-        private string _phone;
-        private string _mail;
-        private int _idDepartment;
-        private List<Absence> theAbsences = new List<Absence>();
 
         /// <summary>
         /// Only a getter as this field is the primary key from the table employee
@@ -26,40 +18,43 @@ namespace Mediatek86.Model
         /// Getter and setter for the department from which belongs the employee
         /// It is the foreign key which refers to the table department
         /// </summary>
-        public int IdDepartment { get => _idDepartment; set => _idDepartment = value; }
+        public int IdDepartment { get; set; }
 
         /// <summary>
         /// Getter and setter for the field corresponding to the employee family name
         /// </summary>
-        public string FamilyName { get => _familyName; set => _familyName = value; }
+        public string FamilyName { get; set; }
 
         /// <summary>
         /// Getter and setter for the field corresponding to the employee first name
         /// </summary>
-        public string FirstName { get => _firstName; set => _firstName = value; }
+        public string FirstName { get; set; }
 
         /// <summary>
         /// Getter and setter for the field corresponding to the employee phone
         /// </summary>
-        public string Phone { get => _phone; set => _phone = value; }
+        public string Phone { get; set; }
 
         /// <summary>
         /// Getter and setter for the field corresponding to the employee mail
         /// </summary>
-        public string Mail { get => _mail; set => _mail = value; }
-
-        public string DepartmentName { get; }
-
+        public string Mail { get; set; }
 
         /// <summary>
-        /// Constructor of the table employee
+        /// Only a getter as the name of department should not be modified
         /// </summary>
-        /// <param name="idEmployee">idEmployee represents the primary key for the table absence</param>
-        /// <param name="idDepartment">idDepartment represents the foreign key which refers to the table department</param>
-        /// <param name="familyName">familyName is a field of the table employee. Its represents the employee family name</param>
-        /// <param name="firstName">firstName is a field of the table employee. Its represents the employee first name</param>
-        /// <param name="phone">phone is a field of the table employee. Its represents the employee phone</param>
-        /// <param name="mail">mail is a field of the table employee. Its represents the employee mail</param>
+        public string DepartmentName { get; }
+
+        /// <summary>
+        /// Constructor of the class EMployee
+        /// </summary>
+        /// <param name="idEmployee">ID of the employee</param>
+        /// <param name="familyName">family name of the employee</param>
+        /// <param name="firstName">first name of the employee</param>
+        /// <param name="phone">phone number of the employee</param>
+        /// <param name="mail">mail of the employee</param>
+        /// <param name="idDepartment">ID number of the department</param>
+        /// <param name="departmentName">name of the department</param>
         public Employee(int idEmployee,
                         string familyName,
                         string firstName,
@@ -70,13 +65,12 @@ namespace Mediatek86.Model
                         )
         {
             IdEmployee = idEmployee;
-            _familyName = familyName;
-            _firstName = firstName;
-            _phone = phone;
-            _mail = mail;
-            _idDepartment = idDepartment;
+            FamilyName = familyName;
+            FirstName = firstName;
+            Phone = phone;
+            Mail = mail;
+            IdDepartment = idDepartment;
             DepartmentName = departmentName;
         }
-      
     }
 }

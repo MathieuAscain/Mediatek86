@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Mediatek86.View;
 using Mediatek86.Control;
 
 namespace Mediatek86
 {
     /// <summary>
-    /// Main entry for the app
+    /// Class of the program
     /// </summary>
     static class Program
     {

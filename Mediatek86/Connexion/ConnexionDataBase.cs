@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+/// <summary>
+/// ConnexionDataBase class
+/// </summary>
 namespace Mediatek86.Connexion
 {
     /// <summary>
@@ -18,11 +21,6 @@ namespace Mediatek86.Connexion
         
         private MySqlDataReader reader;
 
-        /// <summary>
-        /// Private constructor to ensure no instance will be created 
-        /// except with the static method GetInstance
-        /// </summary>
-        /// <param name="stringConnect"></param>
         private ConnexionDataBase(string stringConnect)
         {
             try
@@ -40,7 +38,7 @@ namespace Mediatek86.Connexion
         /// <summary>
         /// Static method to return the unique instance of the connexion to the database
         /// </summary>
-        /// <param name="stringConnect"></param>
+        /// <param name="stringConnect">connexion string to the database</param>
         /// <returns>instance of the connexion to the data base</returns>
         public static ConnexionDataBase GetInstance(string stringConnect)
         {
@@ -126,7 +124,7 @@ namespace Mediatek86.Connexion
         /// <summary>
         /// Create the field containing all the tuples corresponding to the request
         /// </summary>
-        /// <param name="nameField"></param>
+        /// <param name="nameField">field (string) passed into parameter</param>
         /// <returns>Returns the field containing all the tuples or null</returns>
         public object Field(string nameField)
         {
