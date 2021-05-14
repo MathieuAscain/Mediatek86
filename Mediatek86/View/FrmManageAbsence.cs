@@ -355,13 +355,22 @@ namespace Mediatek86.View
                                                                     dateTimePickerEnd.Value.Hour,
                                                                     dateTimePickerEnd.Value.Minute,
                                                                     0);
-
-                        UpdateAbsence(_employee,
+                        if(AbsenceAtTheEndOfTheCalendar(modifyFirstDay) ||
+                                LastDayIsBeforeNextAbsence(modifyFirstDay, modifyLastDay) &&
+                                FirstDayIsAfterPreviousAbsence(modifyFirstDay))
+                        {
+                            UpdateAbsence(_employee,
                                        previousDaySelected,
                                        modifyFirstDay,
                                        modifyLastDay,
                                        comboBoxReason.SelectedIndex + 1);
-
+                        }
+                        else
+                        {
+                            BtnSaveAbsence.BackColor = Color.Orange;
+                            MessageBox.Show("There is already an absence at this date", "Information");
+                            BtnSaveAbsence.BackColor = Color.Aquamarine;
+                        }
                         break;
                     default:
                         break;
