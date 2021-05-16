@@ -16,8 +16,6 @@ namespace Mediatek86.Connexion
         private static ConnexionDataBase instance = null;
       
         private readonly MySqlConnection connexion;
-       
-        private MySqlCommand command;
         
         private MySqlDataReader reader;
 
@@ -58,7 +56,7 @@ namespace Mediatek86.Connexion
         {
             try
             {
-                command = new MySqlCommand(stringQuery, connexion);
+                MySqlCommand command = new MySqlCommand(stringQuery, connexion);
                 if (!(parameters is null))
                 {
                     foreach (KeyValuePair<string, object> parameter in parameters)
@@ -84,7 +82,7 @@ namespace Mediatek86.Connexion
         {
             try
             {
-                command = new MySqlCommand(stringQuery, connexion);
+                MySqlCommand command = new MySqlCommand(stringQuery, connexion);
                 if (!(parameters is null))
                 {
                     foreach (KeyValuePair<string, object> parameter in parameters)
