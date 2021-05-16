@@ -341,7 +341,7 @@ namespace Mediatek86.View
                         }
                         break;
                     case "Modify":
-
+                        BtnSaveAbsence.BackColor = Color.Green;
                         DateTime modifyFirstDay = new DateTime(dateTimePickerStart.Value.Year,
                                                              dateTimePickerStart.Value.Month,
                                                              dateTimePickerStart.Value.Day,
@@ -355,9 +355,7 @@ namespace Mediatek86.View
                                                                     dateTimePickerEnd.Value.Hour,
                                                                     dateTimePickerEnd.Value.Minute,
                                                                     0);
-                        if(AbsenceAtTheEndOfTheCalendar(modifyFirstDay) ||
-                                LastDayIsBeforeNextAbsence(modifyFirstDay, modifyLastDay) &&
-                                FirstDayIsAfterPreviousAbsence(modifyFirstDay))
+                        if (MessageBox.Show("Do you really want to save the modification ?", "Confirmation before saving the modification", MessageBoxButtons.YesNo) == DialogResult.Yes)
                         {
                             UpdateAbsence(_employee,
                                        previousDaySelected,
@@ -365,17 +363,10 @@ namespace Mediatek86.View
                                        modifyLastDay,
                                        comboBoxReason.SelectedIndex + 1);
                         }
-                        else
-                        {
-                            BtnSaveAbsence.BackColor = Color.Orange;
-                            MessageBox.Show("There is already an absence at this date", "Information");
-                            BtnSaveAbsence.BackColor = Color.Aquamarine;
-                        }
                         break;
                     default:
                         break;
                 }
-
                 UnlockDataGridViewAndBlockModifications();
                 UpdateDataGridViewAbsences();
                 ResetAbsenceSelection();

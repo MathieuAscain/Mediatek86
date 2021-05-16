@@ -84,6 +84,7 @@ namespace Mediatek86.View
             textBoxPhone.Text = "";
             textBoxMail.Text = "";
             comboBoxDepartment.SelectedIndex = 0;
+            lblShowButtonClicked.Text = "Pick a left button";
         }
 
         private bool TextBoxesAreNullOrEmpty()
@@ -233,10 +234,19 @@ namespace Mediatek86.View
                         EmptyEmployeeSelection();
                         break;
                     case "Modify":
-                        UpdateEmployee();
-                        UnlockDataGridViewAndBlockModifications();
-                        FillEmployeesList();
-                        EmptyEmployeeSelection();
+                        BtnSaveEmployee.BackColor = Color.Green;
+                        if (MessageBox.Show("Do you really want to save the modification ?", "Confirmation before saving the modification", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            UpdateEmployee();
+                            UnlockDataGridViewAndBlockModifications();
+                            FillEmployeesList();
+                            EmptyEmployeeSelection();
+                        }
+                        else
+                        {
+                            UnlockDataGridViewAndBlockModifications();
+                            EmptyEmployeeSelection();
+                        }
                         break;
                     default:
                         break;
@@ -253,7 +263,6 @@ namespace Mediatek86.View
             {
                 EmptyEmployeeSelection();
                 UnlockDataGridViewAndBlockModifications();
-                lblShowButtonClicked.Text = "Pick a left button";
                 ResetOriginalColor();
             }
         }
