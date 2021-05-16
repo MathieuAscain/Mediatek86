@@ -36,17 +36,24 @@ namespace Mediatek86.View
             {
                 BtnConnexion.BackColor = Color.Coral;
                 MessageBox.Show("All the fields shall be filled", "Information");
+                ClearTextBoxes();
 
             }
             else if (!controlMyApp.ControlAuthentification(textBoxLogin.Text, textBoxPassword.Text))
             {
-                    BtnConnexion.BackColor = Color.Coral;
-                    textBoxLogin.Text = "";
-                    textBoxPassword.Text = "";
-                    textBoxLogin.Focus();
-                    MessageBox.Show("Wrong authentification or you are not admin", "Alert");
-                    BtnConnexion.BackColor = Color.Aquamarine;
+                BtnConnexion.BackColor = Color.Coral;
+                MessageBox.Show("Wrong authentification or you are not admin", "Alert");
+                ClearTextBoxes();
+                textBoxLogin.Focus();
+               
             }
+        }
+
+        private void ClearTextBoxes()
+        {
+            textBoxLogin.Text = "";
+            textBoxPassword.Text = "";
+            BtnConnexion.BackColor = Color.Aquamarine;
         }
     }
 }
